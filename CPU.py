@@ -58,8 +58,6 @@ class CPU:
         self.ram = Ram(self.mem_fis_size, self.page_size, self.subtitution)
         self.tlb = Tlb(self.num_line, self.subs, self.corr)
 
-        print(self.table_of_pages.to_binary(4))
-
     def run_programs(self):
         ''' Flow control to run programs in correct order '''
         while not self.is_finished:
@@ -115,7 +113,12 @@ class CPU:
                     # Break out of for loop
                     break
 
-                # If it is not a yield, go to TLB
+                # If it is not a yield, checks first digits of addr
+                bin_addr = self.table_of_pages.to_binary(addr)
+                bits_to_check = self.table_of_pages.num_of_bits_page
+                page_digits = bin_addr[:bits_to_check]
+                page_number = self.table_of_pages.to_decimal(page_digits)
+                print(page_digits, page_number)
 
         print("All programs finished")
 
