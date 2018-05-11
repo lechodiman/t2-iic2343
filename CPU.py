@@ -1,3 +1,8 @@
+from TableOfPages import TableOfPages
+from Ram import Ram
+from Tlb import Tlb
+
+
 class CPU:
 
     def __init__(self, mem_fis_size, mem_vir_size, page_size, subtitution,
@@ -18,6 +23,8 @@ class CPU:
         # Dict to store last addr for each program
         # {program_index : last_addr_used_index}
         self.last_addr_used_register = {prog: 0 for prog in range(num_prog)}
+
+        self.load_components()
 
     @property
     def is_finished(self):
@@ -41,33 +48,56 @@ class CPU:
         last_addr_current_program = len(self.current_program_list) - 1
         last_addr_used = self.last_addr_used_register[self.current_program_index]
 
-        # print("Last addr used: {}, last curr program: {}".format(last_addr_used, last_addr_current_program))
-
         return last_addr_used == last_addr_current_program
 
     def load_components(self):
-        pass
+        ''' Loads all essentials components'''
+        print("Loading components")
+        self.table_of_pages = TableOfPages(self.mem_vir_size, self.page_size,
+                                           self.num_prog)
+        self.ram = Ram(self.mem_fis_size, self.page_size, self.subtitution)
+        self.tlb = Tlb(self.num_line, self.subs, self.corr)
 
-    def print_components_info(self):
-        pass
+        print(self.table_of_pages.to_binary(4))
 
     def run_programs(self):
         ''' Flow control to run programs in correct order '''
         while not self.is_finished:
+            # If current program is finished go to next program
             if self.current_program_is_finished:
                 print("Program {} already finished".format(self.current_program_index))
                 self.next_program()
                 continue
 
+            # If it is not finished, use it
             print("-" * 25)
             print("Current program {}".format(self.current_program_index))
 
+            # Get last addres used by this program
             last_used_this_program = self.last_addr_used_register[self.current_program_index]
+
+            # If program starts with yield, save info and go to next program
+            if last_used_this_program == 0 and self.current_program_list[last_used_this_program] == -1:
+                print("Cleaning TLB")
+
+                # Save last addres used in this program and add one so it does not resumes from
+                # index 0 and addres -1
+                self.last_addr_used_register[self.current_program_index] = last_used_this_program + 1
+
+                # Go to next program
+                self.next_program()
+
+                # Skip iteration
+                continue
+
+            # If not, check if it resumes from a -1.
             # Add one to the index if cpu takes this program from a -1
             last_used_this_program = last_used_this_program + 1 if self.current_program_list[last_used_this_program] == -1 else last_used_this_program
 
+            # For every address not used, run it
             for j, addr in enumerate(self.current_program_list):
-                if j < last_used_this_program:  # Omit addresses already used
+                # Omit addresses already used
+                if j < last_used_this_program:
                     continue
 
                 print("Addr: {}, program: {}".format(addr, self.current_program_index))
@@ -75,16 +105,17 @@ class CPU:
                 # Save last addres used in this program
                 self.last_addr_used_register[self.current_program_index] = j
 
+                # If addr is a yield, clean TLB and go to next program
                 if addr < 0:
                     print("Cleaning TLB")
-
-                    # Save last addres used in this program
-                    self.last_addr_used_register[self.current_program_index] = j
 
                     # Go to next program
                     self.next_program()
 
+                    # Break out of for loop
                     break
+
+                # If it is not a yield, go to TLB
 
         print("All programs finished")
 
