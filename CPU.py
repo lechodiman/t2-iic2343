@@ -18,12 +18,11 @@ class CPU:
         # Dict to store last addr for each program
         # {program_index : last_addr_used_index}
         self.last_addr_used_register = {prog: 0 for prog in range(num_prog)}
-        print(self.last_addr_used_register)
 
     @property
     def is_finished(self):
         ''' Returns true if all programs did everything they had to do.
-        Checks if last index of program is equal to the lenght  - 1 for
+        Checks if last index of program is equal to the length  - 1 for
         every program'''
         last_address_programs = [len(prog) - 1 for prog in self.prog]
         last_used = self.last_addr_used_register.values()
@@ -33,7 +32,18 @@ class CPU:
 
     @property
     def current_program_list(self):
+        ''' Returns current program list '''
         return self.prog[self.current_program_index]
+
+    @property
+    def current_program_is_finished(self):
+        ''' Compares indexes of last addr used and len of program - 1 '''
+        last_addr_current_program = len(self.current_program_list) - 1
+        last_addr_used = self.last_addr_used_register[self.current_program_index]
+
+        # print("Last addr used: {}, last curr program: {}".format(last_addr_used, last_addr_current_program))
+
+        return last_addr_used == last_addr_current_program
 
     def load_components(self):
         pass
@@ -42,8 +52,41 @@ class CPU:
         pass
 
     def run_programs(self):
-        for addr, j in enumerate(self.current_program_list):
-            pass
+        ''' Flow control to run programs in correct order '''
+        while not self.is_finished:
+            if self.current_program_is_finished:
+                print("Program {} already finished".format(self.current_program_index))
+                self.next_program()
+                continue
+
+            print("-" * 25)
+            print("Current program {}".format(self.current_program_index))
+
+            last_used_this_program = self.last_addr_used_register[self.current_program_index]
+            # Add one to the index if cpu takes this program from a -1
+            last_used_this_program = last_used_this_program + 1 if self.current_program_list[last_used_this_program] == -1 else last_used_this_program
+
+            for j, addr in enumerate(self.current_program_list):
+                if j < last_used_this_program:  # Omit addresses already used
+                    continue
+
+                print("Addr: {}, program: {}".format(addr, self.current_program_index))
+
+                # Save last addres used in this program
+                self.last_addr_used_register[self.current_program_index] = j
+
+                if addr < 0:
+                    print("Cleaning TLB")
+
+                    # Save last addres used in this program
+                    self.last_addr_used_register[self.current_program_index] = j
+
+                    # Go to next program
+                    self.next_program()
+
+                    break
+
+        print("All programs finished")
 
     def next_program(self):
         self.current_program_index += 1
