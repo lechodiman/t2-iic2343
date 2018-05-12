@@ -68,7 +68,7 @@ class CPU:
         while not self.is_finished:
             # If current program is finished go to next program
             if self.current_program_is_finished:
-                print("Program {} already finished".format(self.current_program_index))
+                # print("Program {} already finished".format(self.current_program_index))
                 self.next_program()
                 continue
 

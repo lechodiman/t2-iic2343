@@ -32,7 +32,7 @@ class Tlb:
         for b in self.blocks:
             page = b.get_page()
             if page and page.number == page_number and page.program == program:
-                print("[TLB] Hubo HIT")
+                # print("[TLB] Hubo HIT")
                 self.hit_stats[program] += 1
 
                 # Update counters of block
@@ -41,7 +41,7 @@ class Tlb:
 
                 return page
 
-        print("[TLB Hubo MISS]")
+        # print("[TLB Hubo MISS]")
         return None
 
     def clear(self):
