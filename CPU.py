@@ -56,7 +56,7 @@ class CPU:
 
     def load_components(self):
         ''' Loads all essentials components'''
-        print("Loading components")
+        # print("Loading components")
         self.table_of_pages = TableOfPages(self.mem_vir_size, self.page_size,
                                            self.num_prog)
         self.ram = Ram(self.mem_fis_size, self.page_size, self.subtitution, self.num_prog)
@@ -73,15 +73,16 @@ class CPU:
                 continue
 
             # If it is not finished, use it
-            print("-" * 25)
-            print("Current program {}".format(self.current_program_index))
+            # print("-" * 25)
+            # print("Current program {}".format(self.current_program_index))
 
             # Get last addres used by this program
             last_used_this_program = self.last_addr_used_register[self.current_program_index]
 
             # If program starts with yield, save info and go to next program
             if last_used_this_program == 0 and self.current_program_list[last_used_this_program] == -1:
-                print("Cleaning TLB")
+                # print("Cleaning TLB")
+                self.tlb.clear()
 
                 # Save last addres used in this program and add one so it does not resumes from
                 # index 0 and addres -1
@@ -103,14 +104,15 @@ class CPU:
                 if j < last_used_this_program:
                     continue
 
-                print("Addr: {}, program: {}".format(addr, self.current_program_index))
+                # print("Addr: {}, program: {}".format(addr, self.current_program_index))
 
                 # Save last addres used in this program
                 self.last_addr_used_register[self.current_program_index] = j
 
                 # If addr is a yield, clean TLB and go to next program
                 if addr < 0:
-                    print("Cleaning TLB")
+                    # print("Cleaning TLB")
+                    self.tlb.clear()
 
                     # Go to next program
                     self.next_program()
@@ -158,7 +160,7 @@ class CPU:
                         # It has a marco on ram (LFU, LRU)
                         self.ram.update_counters(page, self.iteration)
 
-        print("All programs finished")
+        # print("All programs finished")
         self.print_statistics()
 
     def print_statistics(self):

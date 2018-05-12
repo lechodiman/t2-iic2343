@@ -44,6 +44,10 @@ class Tlb:
         print("[TLB Hubo MISS]")
         return None
 
+    def clear(self):
+        for b in self.blocks:
+            b.remove_page()
+
     def add_page(self, page, bin_address, iteration):
         ''' Adds page to a block according to corr and subs'''
 
