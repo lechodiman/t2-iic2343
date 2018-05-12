@@ -9,6 +9,9 @@ class TableOfPages:
         self.page_size = page_size
         self.num_programs = num_programs
 
+        # Stores page fault for every program
+        self.page_fault_stats = {num: 0 for num in range(self.num_programs)}
+
         self.init_tables()
 
     @property
@@ -42,3 +45,12 @@ class TableOfPages:
     def to_decimal(self, bin_number):
         ''' Helper method to get decimal repr of binary '''
         return int(bin_number, 2)
+
+    def get_page(self, page_number, program):
+        ''' Gets a page from TLB '''
+        for p in self.pages:
+            if p.number == page_number and p.program == program:
+                return p
+
+    def update_page_faults(self, program_index):
+        self.page_fault_stats[program_index] += 1
