@@ -165,7 +165,7 @@ class CPU:
 
     def print_statistics(self):
         for p in range(self.num_prog):
-            print("Programa {}".format(p))
+            print("PROGRAMA  {}".format(p))
             # Hit TLB
             hit_tlb = self.tlb.hit_stats[p]
             page_fault = self.table_of_pages.page_fault_stats[p]
@@ -179,7 +179,7 @@ class CPU:
             print("swap in: {}".format(swap_in))
             print("swap out: {}".format(swap_out))
             print("page valid: {}".format(page_valid))
-            print("page disk: {}".format(page_disk))
+            print("page disk: {}\n".format(page_disk))
 
     def next_program(self):
         self.current_program_index += 1
