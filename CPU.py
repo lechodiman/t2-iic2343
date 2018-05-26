@@ -75,8 +75,17 @@ class CPU:
         self.tlb = Tlb(self.num_line, self.subs, self.corr, self.num_prog)
         self.disk = Disk(self.num_prog)
 
+        self.print_components()
+
+    def print_components(self):
+        print(repr(self.table_of_pages))
+        print(repr(self.ram))
+        print(repr(self.tlb))
+        print(repr(self.disk))
+
     def run_programs(self):
         ''' Flow control to run programs in correct order '''
+
         while not self.is_finished:
             # If current program is finished go to next program
             if self.current_program_is_finished:
@@ -85,15 +94,15 @@ class CPU:
                 continue
 
             # If it is not finished, use it
-            # print("-" * 25)
-            # print("Current program {}".format(self.current_program_index))
+            print("-" * 25)
+            print("Current program {}".format(self.current_program_index))
 
             # Get last addres used by this program
             last_used_this_program = self.last_addr_used_register[self.current_program_index]
 
             # If program starts with yield, save info and go to next program
             if last_used_this_program == 0 and self.current_program_list[last_used_this_program] == -1:
-                # print("Cleaning TLB")
+                print("[YIELD] Programa {} ha ejecutado YIELD".format(self.current_program_index))
                 self.tlb.clear()
 
                 # Save last addres used in this program and add one so it does not resumes from
@@ -116,14 +125,17 @@ class CPU:
                 if j < last_used_this_program:
                     continue
 
-                # print("Addr: {}, program: {}".format(addr, self.current_program_index))
+                print()
+                print("Iteration: {}".format(self.iteration))
+                print("Addr: {}, program: {}".format(addr, self.current_program_index))
+                print()
 
                 # Save last addres used in this program
                 self.last_addr_used_register[self.current_program_index] = j
 
                 # If addr is a yield, clean TLB and go to next program
                 if addr < 0:
-                    # print("Cleaning TLB")
+                    print("[YIELD] Programa {} ha ejecutado YIELD".format(self.current_program_index))
                     self.tlb.clear()
 
                     # Go to next program
@@ -139,7 +151,11 @@ class CPU:
                 bin_addr = self.table_of_pages.to_binary(addr)
                 bits_to_check = self.table_of_pages.num_of_bits_page
                 page_digits = bin_addr[:bits_to_check]
+                offset_digits = bin_addr[bits_to_check:]
                 page_number = self.table_of_pages.to_decimal(page_digits)
+                offset_number = self.table_of_pages.to_decimal(offset_digits)
+                print("[ACCESO] Memoria virtual {}({}) -> Pagina virtual {}({}) Offset {}({})".format(
+                    bin_addr, addr, page_digits, page_number, offset_digits, offset_number))
 
                 # Check page in TLB, if it finds the page updates hit count and returns it
                 page = self.tlb.get_page(page_number, self.current_program_index, self.iteration)
@@ -152,14 +168,17 @@ class CPU:
 
                 # Check if it has a marco in RAM
                 if not page.has_marco:
+                    print("[Pagina SIN ASOCIAR] Memoria full: {}".format(self.ram.is_full))
+
                     # Page fault
                     self.table_of_pages.update_page_faults(self.current_program_index)
 
                     # Assign a marco
                     self.ram.add_page(page, self.iteration, self.disk)
                 else:
-                    # If it has it can be on disk or ram
+                    # If it has marco it can be on disk or ram
                     if page.on_disk:
+                        print("[PAGE FAULT] La pagina se encuentra en un marco del disco")
                         # Page fault
                         self.table_of_pages.update_page_faults(self.current_program_index)
 
@@ -173,7 +192,7 @@ class CPU:
                         self.ram.update_counters(page, self.iteration)
 
         # print("All programs finished")
-        self.print_statistics()
+        # self.print_statistics()
 
     def print_statistics(self):
         for p in range(self.num_prog):

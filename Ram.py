@@ -16,9 +16,36 @@ class Ram:
         # Dict to store swap in
         self.swap_in_stats = {num: 0 for num in range(num_programs)}
 
+        print("Memoria fisica de {} bytes tiene {} marcos".format(self.mem_fis_size, self.num_of_marcos))
+
     @property
     def num_of_marcos(self):
         return int(self.mem_fis_size / self.page_size)
+
+    @property
+    def is_full(self):
+        # Look for available marco
+        available_marco = None
+        for m in self.marcos:
+            if m.is_empty:
+                available_marco = m
+
+        if not available_marco:
+            return True
+
+        return False
+
+    def __repr__(self):
+        msg = "\n\t Memoria Fisica\n\n"
+        for m in self.marcos:
+            msg += "Marco {} ".format(m.num_block)
+            msg += "- Pagina virtual {}".format(repr(m.page_inside))
+            msg += "- LRU: {} ".format(m.last_used_time)
+            msg += "- LFU: {} ".format(m.times_used)
+            msg += "- FIFO: {} ".format(m.insertion_time)
+            msg += "\n"
+
+        return msg
 
     def init_marcos(self):
         self.marcos = []
@@ -33,9 +60,14 @@ class Ram:
             if m.is_empty:
                 available_marco = m
 
+        print("Asociando pagina {} a marco {}".format(page, available_marco.num_block))
+
         # If there is no av marco, backup one
         if not available_marco:
+            print("""[PAGE FAULT] Memoria llena.
+                Es necesario asignar marco para pagina {}""".format(page))
             marco_to_backup = self.get_marco_to_backup()
+            print("[Sustitucion RAM] {}, se va el marco {}".format(self.subtitution, marco_to_backup.num_block))
 
             # Move marco to disk
             disk.receive_marco(marco_to_backup)
@@ -43,6 +75,8 @@ class Ram:
             # Update swap out
             program_out_index = marco_to_backup.page_inside.program
             self.swap_out_stats[program_out_index] += 1
+            print("[SWAP OUT] La pagina virutal: ".format(marco_to_backup.page_inside))
+            print("[SWAP IN] ?? La pagina: ".format(page))
 
             # Create new marco with same number
             marco_numer = marco_to_backup.num_block
@@ -106,6 +140,9 @@ class Ram:
         # Update swap in
         program_in_index = marco_to_swap_in.page_inside.program
         self.swap_in_stats[program_in_index] += 1
+
+        print("[SWAP OUT] El marco {}".format(marco_to_backup))
+        print("[SWAP IN] El marco {}".format(marco_to_swap_in))
 
     def update_counters(self, page, iteration):
         for m in self.marcos:

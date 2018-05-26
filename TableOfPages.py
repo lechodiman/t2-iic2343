@@ -14,6 +14,19 @@ class TableOfPages:
 
         self.init_tables()
 
+        print("Memoria virtual de {} bytes tiene {} pages".format(self.mem_vir_size, self.num_of_pages))
+
+    def __repr__(self):
+        msg = "\n\t Table Of Pages\n\n"
+        for p in self.pages:
+            msg += "Page {} ".format(p.number)
+            msg += "- Programa {}".format(repr(p.program))
+            msg += "- Marco: {} ".format(repr(p.marco))
+            msg += "- On Disk: {} ".format(p.marco_on_disk)
+            msg += "\n"
+
+        return msg
+
     @property
     def num_of_pages(self):
         return int(self.mem_vir_size / self.page_size)

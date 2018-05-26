@@ -14,6 +14,6 @@ class Page:
         return self.number == other.number and self.program == other.program
 
     def __repr__(self):
-        msg = "Page({}, {})".format(self.number, self.program)
+        msg = "Page(n: {}, prog: {})".format(self.number, self.program)
 
         return msg

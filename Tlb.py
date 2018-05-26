@@ -21,6 +21,19 @@ class Tlb:
     def num_of_bits_block(self):
         return int(log(self.num_line, 2))
 
+    def __repr__(self):
+        msg = "\n\t TLB\n\n"
+
+        for b in self.blocks:
+            msg += "Entrada(Block) {} ".format(b.num_block)
+            msg += "- Pagina virtual {}".format(repr(b.page_inside))
+            msg += "- LRU: {} ".format(b.last_used_time)
+            msg += "- LFU: {} ".format(b.times_used)
+            msg += "- FIFO: {} ".format(b.insertion_time)
+            msg += "\n"
+
+        return msg
+
     def init_blocks(self):
         self.blocks = []
         for i in range(self.num_line):
@@ -32,7 +45,7 @@ class Tlb:
         for b in self.blocks:
             page = b.get_page()
             if page and page.number == page_number and page.program == program:
-                # print("[TLB] Hubo HIT")
+                print("[TLB] Hubo HIT. {}".format(self.subs))
                 self.hit_stats[program] += 1
 
                 # Update counters of block
@@ -41,10 +54,11 @@ class Tlb:
 
                 return page
 
-        # print("[TLB Hubo MISS]")
+        print("[TLB NO hubo HIT]. {}".format(self.subs))
         return None
 
     def clear(self):
+        print("[TLB] Limpiando TLB")
         for b in self.blocks:
             b.remove_page()
 
@@ -61,6 +75,8 @@ class Tlb:
 
             # Assign new page
             block.assign_page(page, iteration)
+
+            print("""[Sustitucion TLB] DM Se vacio el bloque""".format(block.num_block))
 
         elif self.corr == "FA":
             # Look for an available block
@@ -97,6 +113,10 @@ class Tlb:
                             block_least_used = b
 
                     block_to_replace = block_least_used
+
+                print("""[Sustitucion TLB] {},
+                 se va la entrada de bloque {}""".format(self.subs,
+                                                         block_to_replace.num_block))
 
                 # Remove current page
                 block_to_replace.remove_page()

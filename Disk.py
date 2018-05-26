@@ -4,6 +4,18 @@ class Disk:
         self.backed_up_marcos = []
         self.num_programs = num_programs
 
+    def __repr__(self):
+        msg = "\n\t Disk (Backed Up Marcos)\n\n"
+        for m in self.backed_up_marcos:
+            msg += "Marco {} ".format(m.num_block)
+            msg += "- Pagina virtual {}".format(repr(m.page_inside))
+            msg += "- LRU: {} ".format(m.last_used_time)
+            msg += "- LFU: {} ".format(m.times_used)
+            msg += "- FIFO: {} ".format(m.insertion_time)
+            msg += "\n"
+
+        return msg
+
     def receive_marco(self, marco):
         marco.on_disk = True
         marco.page_inside.on_disk = True
