@@ -18,16 +18,6 @@ class CPU:
         self.num_prog = NUM_PROG
         self.prog = PROG
 
-        print("self.mem_fis_size = ", self.mem_fis_size)
-        print("self.mem_vir_size = ", self.mem_vir_size)
-        print("self.page_size = ", self.page_size)
-        print("self.subtitution = ", self.subtitution)
-        print("self.num_line = ", self.num_line)
-        print("self.corr = ", self.corr)
-        print("self.subs = ", self.subs)
-        print("self.num_prog = ", self.num_prog)
-        print("self.prog = ", self.prog)
-        print()
         print("*" * 50 + "\n")
 
         # Stores index of current program running
@@ -190,6 +180,8 @@ class CPU:
                     else:
                         # It has a marco on ram (LFU, LRU)
                         self.ram.update_counters(page, self.iteration)
+
+                print("#" * 66)
 
         # print("All programs finished")
         # self.print_statistics()
