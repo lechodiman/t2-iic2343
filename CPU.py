@@ -6,24 +6,36 @@ from Disk import Disk
 
 class CPU:
 
-    def __init__(self, mem_fis_size, mem_vir_size, page_size, subtitution,
-                 num_line, corr, subs, num_prog, prog):
-        self.mem_fis_size = mem_fis_size
-        self.mem_vir_size = mem_vir_size
-        self.page_size = page_size
-        self.subtitution = subtitution
-        self.num_line = num_line
-        self.corr = corr
-        self.subs = subs
-        self.num_prog = num_prog
-        self.prog = prog
+    def __init__(self, MEM_FIS_SIZE, MEM_VIR_SIZE, PAGE_SIZE, SUBSTITUTION,
+                 NUM_LINE, CORR, SUBS, NUM_PROG, PROG):
+        self.mem_fis_size = MEM_FIS_SIZE
+        self.mem_vir_size = MEM_VIR_SIZE
+        self.page_size = PAGE_SIZE
+        self.subtitution = SUBSTITUTION
+        self.num_line = NUM_LINE
+        self.corr = CORR
+        self.subs = SUBS
+        self.num_prog = NUM_PROG
+        self.prog = PROG
+
+        print("self.mem_fis_size = ", self.mem_fis_size)
+        print("self.mem_vir_size = ", self.mem_vir_size)
+        print("self.page_size = ", self.page_size)
+        print("self.subtitution = ", self.subtitution)
+        print("self.num_line = ", self.num_line)
+        print("self.corr = ", self.corr)
+        print("self.subs = ", self.subs)
+        print("self.num_prog = ", self.num_prog)
+        print("self.prog = ", self.prog)
+        print()
+        print("*" * 50 + "\n")
 
         # Stores index of current program running
         self.current_program_index = 0
 
         # Dict to store last addr for each program
         # {program_index : last_addr_used_index}
-        self.last_addr_used_register = {prog: 0 for prog in range(num_prog)}
+        self.last_addr_used_register = {prog: 0 for prog in range(self.num_prog)}
 
         # Works as a timestamp for FIFO, LFU, LRU stats
         self.iteration = 0

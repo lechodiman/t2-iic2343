@@ -1,0 +1,36 @@
+MEM_FIS_SIZE = 32
+MEM_VIR_SIZE = 32
+PAGE_SIZE = 4
+SUBSTITUTION = "LFU"
+NUM_LINE = 2
+CORR = "FA"
+SUBS = "LRU"
+NUM_PROG = 3
+PROG = [[1,2,-1,7,3,5,31,-1,31,23,15,-1,9,15], [-1,6,5,-1,8,5,4,5,-1,5], [4,5,23,16,6,7]]
+
+
+
+Programa  1
+hit TLB:  2
+page fault:  6
+swap in:  6
+swap out:  1
+page valid:  6
+page disk:  1
+
+Programa  2
+hit TLB:  3
+page fault:  2
+swap in:  2
+swap out:  0
+page valid:  2
+page disk:  0
+
+Programa  3
+hit TLB:  2
+page fault:  3
+swap in:  3
+swap out:  2
+page valid:  3
+page disk:  2
+

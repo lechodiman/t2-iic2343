@@ -1,0 +1,610 @@
+******* Multiprogramación.**********
+Programas 3
+Memoria virtual de 32 bytes tiene 8 páginas
+Memoria física de 32 bytes tiene 8 páginas
+
+TLB con 2 entradas.
+
+------- Iniciando ejecucion del programa 1 -----------
+
+[ACCESO] Memoria virtual 00001(1) -> Página virtual 000(0) Offset 01(1)
+[TLB] No hubo HIT. Full Asociaty
+[Página SIN ASOCIAR] Memoria sin llenar. Asociando página 0 a bloque 0
+
+   Memoria Física    
+
+Marco 0 - Página virtual 0 - Programa 1 - LRU: 1 - LFU: 1 - FIFO: 1
+Marco 1 - Página virtual None - Programa None - LRU: 0 - LFU: 0 - FIFO: 0
+Marco 2 - Página virtual None - Programa None - LRU: 0 - LFU: 0 - FIFO: 0
+Marco 3 - Página virtual None - Programa None - LRU: 0 - LFU: 0 - FIFO: 0
+Marco 4 - Página virtual None - Programa None - LRU: 0 - LFU: 0 - FIFO: 0
+Marco 5 - Página virtual None - Programa None - LRU: 0 - LFU: 0 - FIFO: 0
+Marco 6 - Página virtual None - Programa None - LRU: 0 - LFU: 0 - FIFO: 0
+Marco 7 - Página virtual None - Programa None - LRU: 0 - LFU: 0 - FIFO: 0
+
+
+  TLB   
+
+Entrada 0 - LRU: 1 - LFU: 1 - FIFO: 1 Vitual: 0 
+Entrada 1 - LRU: 0 - LFU: 0 - FIFO: 0 Vitual: -1 
+
+##################################################################
+
+[ACCESO] Memoria virtual 00010(2) -> Página virtual 000(0) Offset 10(2)
+[TLB] Hubo HIT. Full Asociaty. Accediendo a la entrada 0
+[ACCESO] Página virtual 0 accediendo al bloque 0
+
+   Memoria Física    
+
+Marco 0 - Página virtual 0 - Programa 1 - LRU: 2 - LFU: 2 - FIFO: 1
+Marco 1 - Página virtual None - Programa None - LRU: 0 - LFU: 0 - FIFO: 0
+Marco 2 - Página virtual None - Programa None - LRU: 0 - LFU: 0 - FIFO: 0
+Marco 3 - Página virtual None - Programa None - LRU: 0 - LFU: 0 - FIFO: 0
+Marco 4 - Página virtual None - Programa None - LRU: 0 - LFU: 0 - FIFO: 0
+Marco 5 - Página virtual None - Programa None - LRU: 0 - LFU: 0 - FIFO: 0
+Marco 6 - Página virtual None - Programa None - LRU: 0 - LFU: 0 - FIFO: 0
+Marco 7 - Página virtual None - Programa None - LRU: 0 - LFU: 0 - FIFO: 0
+
+
+  TLB   
+
+Entrada 0 - LRU: 2 - LFU: 2 - FIFO: 1 Vitual: 0 
+Entrada 1 - LRU: 0 - LFU: 0 - FIFO: 0 Vitual: -1 
+
+##################################################################
+[YIELD] Programa 1 ha ejecutado YIELD
+
+[TLB] Limpiando TLB
+------- Iniciando ejecucion del programa 2 -----------
+[YIELD] Programa 2 ha ejecutado YIELD
+
+[TLB] Limpiando TLB
+------- Iniciando ejecucion del programa 3 -----------
+
+[ACCESO] Memoria virtual 00100(4) -> Página virtual 001(1) Offset 00(0)
+[TLB] No hubo HIT. Full Asociaty
+[Página SIN ASOCIAR] Memoria sin llenar. Asociando página 1 a bloque 1
+
+   Memoria Física    
+
+Marco 0 - Página virtual 0 - Programa 1 - LRU: 2 - LFU: 2 - FIFO: 1
+Marco 1 - Página virtual 1 - Programa 3 - LRU: 3 - LFU: 1 - FIFO: 2
+Marco 2 - Página virtual None - Programa None - LRU: 0 - LFU: 0 - FIFO: 0
+Marco 3 - Página virtual None - Programa None - LRU: 0 - LFU: 0 - FIFO: 0
+Marco 4 - Página virtual None - Programa None - LRU: 0 - LFU: 0 - FIFO: 0
+Marco 5 - Página virtual None - Programa None - LRU: 0 - LFU: 0 - FIFO: 0
+Marco 6 - Página virtual None - Programa None - LRU: 0 - LFU: 0 - FIFO: 0
+Marco 7 - Página virtual None - Programa None - LRU: 0 - LFU: 0 - FIFO: 0
+
+
+  TLB   
+
+Entrada 0 - LRU: 1 - LFU: 1 - FIFO: 1 Vitual: 1 
+Entrada 1 - LRU: 0 - LFU: 0 - FIFO: 0 Vitual: -1 
+
+##################################################################
+
+[ACCESO] Memoria virtual 00101(5) -> Página virtual 001(1) Offset 01(1)
+[TLB] Hubo HIT. Full Asociaty. Accediendo a la entrada 0
+[ACCESO] Página virtual 1 accediendo al bloque 1
+
+   Memoria Física    
+
+Marco 0 - Página virtual 0 - Programa 1 - LRU: 2 - LFU: 2 - FIFO: 1
+Marco 1 - Página virtual 1 - Programa 3 - LRU: 4 - LFU: 2 - FIFO: 2
+Marco 2 - Página virtual None - Programa None - LRU: 0 - LFU: 0 - FIFO: 0
+Marco 3 - Página virtual None - Programa None - LRU: 0 - LFU: 0 - FIFO: 0
+Marco 4 - Página virtual None - Programa None - LRU: 0 - LFU: 0 - FIFO: 0
+Marco 5 - Página virtual None - Programa None - LRU: 0 - LFU: 0 - FIFO: 0
+Marco 6 - Página virtual None - Programa None - LRU: 0 - LFU: 0 - FIFO: 0
+Marco 7 - Página virtual None - Programa None - LRU: 0 - LFU: 0 - FIFO: 0
+
+
+  TLB   
+
+Entrada 0 - LRU: 2 - LFU: 2 - FIFO: 1 Vitual: 1 
+Entrada 1 - LRU: 0 - LFU: 0 - FIFO: 0 Vitual: -1 
+
+##################################################################
+
+[ACCESO] Memoria virtual 10111(23) -> Página virtual 101(5) Offset 11(3)
+[TLB] No hubo HIT. Full Asociaty
+[Página SIN ASOCIAR] Memoria sin llenar. Asociando página 5 a bloque 2
+[TLB] Se ha llenado la TLB
+
+   Memoria Física    
+
+Marco 0 - Página virtual 0 - Programa 1 - LRU: 2 - LFU: 2 - FIFO: 1
+Marco 1 - Página virtual 1 - Programa 3 - LRU: 4 - LFU: 2 - FIFO: 2
+Marco 2 - Página virtual 5 - Programa 3 - LRU: 5 - LFU: 1 - FIFO: 3
+Marco 3 - Página virtual None - Programa None - LRU: 0 - LFU: 0 - FIFO: 0
+Marco 4 - Página virtual None - Programa None - LRU: 0 - LFU: 0 - FIFO: 0
+Marco 5 - Página virtual None - Programa None - LRU: 0 - LFU: 0 - FIFO: 0
+Marco 6 - Página virtual None - Programa None - LRU: 0 - LFU: 0 - FIFO: 0
+Marco 7 - Página virtual None - Programa None - LRU: 0 - LFU: 0 - FIFO: 0
+
+
+  TLB   
+
+Entrada 0 - LRU: 2 - LFU: 2 - FIFO: 1 Vitual: 1 
+Entrada 1 - LRU: 3 - LFU: 1 - FIFO: 2 Vitual: 5 
+
+##################################################################
+
+[ACCESO] Memoria virtual 10000(16) -> Página virtual 100(4) Offset 00(0)
+[TLB] No hubo HIT. Full Asociaty
+[Página SIN ASOCIAR] Memoria sin llenar. Asociando página 4 a bloque 3
+[Sustitución TLB] LRU, se va la entrada 0
+
+   Memoria Física    
+
+Marco 0 - Página virtual 0 - Programa 1 - LRU: 2 - LFU: 2 - FIFO: 1
+Marco 1 - Página virtual 1 - Programa 3 - LRU: 4 - LFU: 2 - FIFO: 2
+Marco 2 - Página virtual 5 - Programa 3 - LRU: 5 - LFU: 1 - FIFO: 3
+Marco 3 - Página virtual 4 - Programa 3 - LRU: 6 - LFU: 1 - FIFO: 4
+Marco 4 - Página virtual None - Programa None - LRU: 0 - LFU: 0 - FIFO: 0
+Marco 5 - Página virtual None - Programa None - LRU: 0 - LFU: 0 - FIFO: 0
+Marco 6 - Página virtual None - Programa None - LRU: 0 - LFU: 0 - FIFO: 0
+Marco 7 - Página virtual None - Programa None - LRU: 0 - LFU: 0 - FIFO: 0
+
+
+  TLB   
+
+Entrada 0 - LRU: 4 - LFU: 1 - FIFO: 3 Vitual: 4 
+Entrada 1 - LRU: 3 - LFU: 1 - FIFO: 2 Vitual: 5 
+
+##################################################################
+
+[ACCESO] Memoria virtual 00110(6) -> Página virtual 001(1) Offset 10(2)
+[TLB] No hubo HIT. Full Asociaty
+[ACCESO] Página virtual 1 accediendo al bloque 1
+[Sustitución TLB] LRU, se va la entrada 1
+
+   Memoria Física    
+
+Marco 0 - Página virtual 0 - Programa 1 - LRU: 2 - LFU: 2 - FIFO: 1
+Marco 1 - Página virtual 1 - Programa 3 - LRU: 7 - LFU: 3 - FIFO: 2
+Marco 2 - Página virtual 5 - Programa 3 - LRU: 5 - LFU: 1 - FIFO: 3
+Marco 3 - Página virtual 4 - Programa 3 - LRU: 6 - LFU: 1 - FIFO: 4
+Marco 4 - Página virtual None - Programa None - LRU: 0 - LFU: 0 - FIFO: 0
+Marco 5 - Página virtual None - Programa None - LRU: 0 - LFU: 0 - FIFO: 0
+Marco 6 - Página virtual None - Programa None - LRU: 0 - LFU: 0 - FIFO: 0
+Marco 7 - Página virtual None - Programa None - LRU: 0 - LFU: 0 - FIFO: 0
+
+
+  TLB   
+
+Entrada 0 - LRU: 4 - LFU: 1 - FIFO: 3 Vitual: 4 
+Entrada 1 - LRU: 5 - LFU: 1 - FIFO: 4 Vitual: 1 
+
+##################################################################
+
+[ACCESO] Memoria virtual 00111(7) -> Página virtual 001(1) Offset 11(3)
+[TLB] Hubo HIT. Full Asociaty. Accediendo a la entrada 1
+[ACCESO] Página virtual 1 accediendo al bloque 1
+
+   Memoria Física    
+
+Marco 0 - Página virtual 0 - Programa 1 - LRU: 2 - LFU: 2 - FIFO: 1
+Marco 1 - Página virtual 1 - Programa 3 - LRU: 8 - LFU: 4 - FIFO: 2
+Marco 2 - Página virtual 5 - Programa 3 - LRU: 5 - LFU: 1 - FIFO: 3
+Marco 3 - Página virtual 4 - Programa 3 - LRU: 6 - LFU: 1 - FIFO: 4
+Marco 4 - Página virtual None - Programa None - LRU: 0 - LFU: 0 - FIFO: 0
+Marco 5 - Página virtual None - Programa None - LRU: 0 - LFU: 0 - FIFO: 0
+Marco 6 - Página virtual None - Programa None - LRU: 0 - LFU: 0 - FIFO: 0
+Marco 7 - Página virtual None - Programa None - LRU: 0 - LFU: 0 - FIFO: 0
+
+
+  TLB   
+
+Entrada 0 - LRU: 4 - LFU: 1 - FIFO: 3 Vitual: 4 
+Entrada 1 - LRU: 6 - LFU: 2 - FIFO: 4 Vitual: 1 
+
+##################################################################
+------- Finalizando ejecucion del programa 3 -----------
+[TLB] Limpiando TLB
+------- Iniciando ejecucion del programa 1 -----------
+
+[ACCESO] Memoria virtual 00111(7) -> Página virtual 001(1) Offset 11(3)
+[TLB] No hubo HIT. Full Asociaty
+[Página SIN ASOCIAR] Memoria sin llenar. Asociando página 1 a bloque 4
+
+   Memoria Física    
+
+Marco 0 - Página virtual 0 - Programa 1 - LRU: 2 - LFU: 2 - FIFO: 1
+Marco 1 - Página virtual 1 - Programa 3 - LRU: 8 - LFU: 4 - FIFO: 2
+Marco 2 - Página virtual 5 - Programa 3 - LRU: 5 - LFU: 1 - FIFO: 3
+Marco 3 - Página virtual 4 - Programa 3 - LRU: 6 - LFU: 1 - FIFO: 4
+Marco 4 - Página virtual 1 - Programa 1 - LRU: 9 - LFU: 1 - FIFO: 5
+Marco 5 - Página virtual None - Programa None - LRU: 0 - LFU: 0 - FIFO: 0
+Marco 6 - Página virtual None - Programa None - LRU: 0 - LFU: 0 - FIFO: 0
+Marco 7 - Página virtual None - Programa None - LRU: 0 - LFU: 0 - FIFO: 0
+
+
+  TLB   
+
+Entrada 0 - LRU: 1 - LFU: 1 - FIFO: 1 Vitual: 1 
+Entrada 1 - LRU: 0 - LFU: 0 - FIFO: 0 Vitual: -1 
+
+##################################################################
+
+[ACCESO] Memoria virtual 00011(3) -> Página virtual 000(0) Offset 11(3)
+[TLB] No hubo HIT. Full Asociaty
+[ACCESO] Página virtual 0 accediendo al bloque 0
+[TLB] Se ha llenado la TLB
+
+   Memoria Física    
+
+Marco 0 - Página virtual 0 - Programa 1 - LRU: 10 - LFU: 3 - FIFO: 1
+Marco 1 - Página virtual 1 - Programa 3 - LRU: 8 - LFU: 4 - FIFO: 2
+Marco 2 - Página virtual 5 - Programa 3 - LRU: 5 - LFU: 1 - FIFO: 3
+Marco 3 - Página virtual 4 - Programa 3 - LRU: 6 - LFU: 1 - FIFO: 4
+Marco 4 - Página virtual 1 - Programa 1 - LRU: 9 - LFU: 1 - FIFO: 5
+Marco 5 - Página virtual None - Programa None - LRU: 0 - LFU: 0 - FIFO: 0
+Marco 6 - Página virtual None - Programa None - LRU: 0 - LFU: 0 - FIFO: 0
+Marco 7 - Página virtual None - Programa None - LRU: 0 - LFU: 0 - FIFO: 0
+
+
+  TLB   
+
+Entrada 0 - LRU: 1 - LFU: 1 - FIFO: 1 Vitual: 1 
+Entrada 1 - LRU: 2 - LFU: 1 - FIFO: 2 Vitual: 0 
+
+##################################################################
+
+[ACCESO] Memoria virtual 00101(5) -> Página virtual 001(1) Offset 01(1)
+[TLB] Hubo HIT. Full Asociaty. Accediendo a la entrada 0
+[ACCESO] Página virtual 1 accediendo al bloque 4
+
+   Memoria Física    
+
+Marco 0 - Página virtual 0 - Programa 1 - LRU: 10 - LFU: 3 - FIFO: 1
+Marco 1 - Página virtual 1 - Programa 3 - LRU: 8 - LFU: 4 - FIFO: 2
+Marco 2 - Página virtual 5 - Programa 3 - LRU: 5 - LFU: 1 - FIFO: 3
+Marco 3 - Página virtual 4 - Programa 3 - LRU: 6 - LFU: 1 - FIFO: 4
+Marco 4 - Página virtual 1 - Programa 1 - LRU: 11 - LFU: 2 - FIFO: 5
+Marco 5 - Página virtual None - Programa None - LRU: 0 - LFU: 0 - FIFO: 0
+Marco 6 - Página virtual None - Programa None - LRU: 0 - LFU: 0 - FIFO: 0
+Marco 7 - Página virtual None - Programa None - LRU: 0 - LFU: 0 - FIFO: 0
+
+
+  TLB   
+
+Entrada 0 - LRU: 3 - LFU: 2 - FIFO: 1 Vitual: 1 
+Entrada 1 - LRU: 2 - LFU: 1 - FIFO: 2 Vitual: 0 
+
+##################################################################
+
+[ACCESO] Memoria virtual 11111(31) -> Página virtual 111(7) Offset 11(3)
+[TLB] No hubo HIT. Full Asociaty
+[Página SIN ASOCIAR] Memoria sin llenar. Asociando página 7 a bloque 5
+[Sustitución TLB] LRU, se va la entrada 1
+
+   Memoria Física    
+
+Marco 0 - Página virtual 0 - Programa 1 - LRU: 10 - LFU: 3 - FIFO: 1
+Marco 1 - Página virtual 1 - Programa 3 - LRU: 8 - LFU: 4 - FIFO: 2
+Marco 2 - Página virtual 5 - Programa 3 - LRU: 5 - LFU: 1 - FIFO: 3
+Marco 3 - Página virtual 4 - Programa 3 - LRU: 6 - LFU: 1 - FIFO: 4
+Marco 4 - Página virtual 1 - Programa 1 - LRU: 11 - LFU: 2 - FIFO: 5
+Marco 5 - Página virtual 7 - Programa 1 - LRU: 12 - LFU: 1 - FIFO: 6
+Marco 6 - Página virtual None - Programa None - LRU: 0 - LFU: 0 - FIFO: 0
+Marco 7 - Página virtual None - Programa None - LRU: 0 - LFU: 0 - FIFO: 0
+
+
+  TLB   
+
+Entrada 0 - LRU: 3 - LFU: 2 - FIFO: 1 Vitual: 1 
+Entrada 1 - LRU: 4 - LFU: 1 - FIFO: 3 Vitual: 7 
+
+##################################################################
+[YIELD] Programa 1 ha ejecutado YIELD
+
+[TLB] Limpiando TLB
+------- Iniciando ejecucion del programa 2 -----------
+
+[ACCESO] Memoria virtual 00110(6) -> Página virtual 001(1) Offset 10(2)
+[TLB] No hubo HIT. Full Asociaty
+[Página SIN ASOCIAR] Memoria sin llenar. Asociando página 1 a bloque 6
+
+   Memoria Física    
+
+Marco 0 - Página virtual 0 - Programa 1 - LRU: 10 - LFU: 3 - FIFO: 1
+Marco 1 - Página virtual 1 - Programa 3 - LRU: 8 - LFU: 4 - FIFO: 2
+Marco 2 - Página virtual 5 - Programa 3 - LRU: 5 - LFU: 1 - FIFO: 3
+Marco 3 - Página virtual 4 - Programa 3 - LRU: 6 - LFU: 1 - FIFO: 4
+Marco 4 - Página virtual 1 - Programa 1 - LRU: 11 - LFU: 2 - FIFO: 5
+Marco 5 - Página virtual 7 - Programa 1 - LRU: 12 - LFU: 1 - FIFO: 6
+Marco 6 - Página virtual 1 - Programa 2 - LRU: 13 - LFU: 1 - FIFO: 7
+Marco 7 - Página virtual None - Programa None - LRU: 0 - LFU: 0 - FIFO: 0
+
+
+  TLB   
+
+Entrada 0 - LRU: 1 - LFU: 1 - FIFO: 1 Vitual: 1 
+Entrada 1 - LRU: 0 - LFU: 0 - FIFO: 0 Vitual: -1 
+
+##################################################################
+
+[ACCESO] Memoria virtual 00101(5) -> Página virtual 001(1) Offset 01(1)
+[TLB] Hubo HIT. Full Asociaty. Accediendo a la entrada 0
+[ACCESO] Página virtual 1 accediendo al bloque 6
+
+   Memoria Física    
+
+Marco 0 - Página virtual 0 - Programa 1 - LRU: 10 - LFU: 3 - FIFO: 1
+Marco 1 - Página virtual 1 - Programa 3 - LRU: 8 - LFU: 4 - FIFO: 2
+Marco 2 - Página virtual 5 - Programa 3 - LRU: 5 - LFU: 1 - FIFO: 3
+Marco 3 - Página virtual 4 - Programa 3 - LRU: 6 - LFU: 1 - FIFO: 4
+Marco 4 - Página virtual 1 - Programa 1 - LRU: 11 - LFU: 2 - FIFO: 5
+Marco 5 - Página virtual 7 - Programa 1 - LRU: 12 - LFU: 1 - FIFO: 6
+Marco 6 - Página virtual 1 - Programa 2 - LRU: 14 - LFU: 2 - FIFO: 7
+Marco 7 - Página virtual None - Programa None - LRU: 0 - LFU: 0 - FIFO: 0
+
+
+  TLB   
+
+Entrada 0 - LRU: 2 - LFU: 2 - FIFO: 1 Vitual: 1 
+Entrada 1 - LRU: 0 - LFU: 0 - FIFO: 0 Vitual: -1 
+
+##################################################################
+[YIELD] Programa 2 ha ejecutado YIELD
+
+[TLB] Limpiando TLB
+------- Iniciando ejecucion del programa 1 -----------
+
+[ACCESO] Memoria virtual 11111(31) -> Página virtual 111(7) Offset 11(3)
+[TLB] No hubo HIT. Full Asociaty
+[ACCESO] Página virtual 7 accediendo al bloque 5
+
+   Memoria Física    
+
+Marco 0 - Página virtual 0 - Programa 1 - LRU: 10 - LFU: 3 - FIFO: 1
+Marco 1 - Página virtual 1 - Programa 3 - LRU: 8 - LFU: 4 - FIFO: 2
+Marco 2 - Página virtual 5 - Programa 3 - LRU: 5 - LFU: 1 - FIFO: 3
+Marco 3 - Página virtual 4 - Programa 3 - LRU: 6 - LFU: 1 - FIFO: 4
+Marco 4 - Página virtual 1 - Programa 1 - LRU: 11 - LFU: 2 - FIFO: 5
+Marco 5 - Página virtual 7 - Programa 1 - LRU: 15 - LFU: 2 - FIFO: 6
+Marco 6 - Página virtual 1 - Programa 2 - LRU: 14 - LFU: 2 - FIFO: 7
+Marco 7 - Página virtual None - Programa None - LRU: 0 - LFU: 0 - FIFO: 0
+
+
+  TLB   
+
+Entrada 0 - LRU: 1 - LFU: 1 - FIFO: 1 Vitual: 7 
+Entrada 1 - LRU: 0 - LFU: 0 - FIFO: 0 Vitual: -1 
+
+##################################################################
+
+[ACCESO] Memoria virtual 10111(23) -> Página virtual 101(5) Offset 11(3)
+[TLB] No hubo HIT. Full Asociaty
+[Página SIN ASOCIAR] Memoria sin llenar. Asociando página 5 a bloque 7
+[MEMORIA] La memoria física se ha llenado
+[TLB] Se ha llenado la TLB
+
+   Memoria Física    
+
+Marco 0 - Página virtual 0 - Programa 1 - LRU: 10 - LFU: 3 - FIFO: 1
+Marco 1 - Página virtual 1 - Programa 3 - LRU: 8 - LFU: 4 - FIFO: 2
+Marco 2 - Página virtual 5 - Programa 3 - LRU: 5 - LFU: 1 - FIFO: 3
+Marco 3 - Página virtual 4 - Programa 3 - LRU: 6 - LFU: 1 - FIFO: 4
+Marco 4 - Página virtual 1 - Programa 1 - LRU: 11 - LFU: 2 - FIFO: 5
+Marco 5 - Página virtual 7 - Programa 1 - LRU: 15 - LFU: 2 - FIFO: 6
+Marco 6 - Página virtual 1 - Programa 2 - LRU: 14 - LFU: 2 - FIFO: 7
+Marco 7 - Página virtual 5 - Programa 1 - LRU: 16 - LFU: 1 - FIFO: 8
+
+
+  TLB   
+
+Entrada 0 - LRU: 1 - LFU: 1 - FIFO: 1 Vitual: 7 
+Entrada 1 - LRU: 2 - LFU: 1 - FIFO: 2 Vitual: 5 
+
+##################################################################
+
+[ACCESO] Memoria virtual 01111(15) -> Página virtual 011(3) Offset 11(3)
+[TLB] No hubo HIT. Full Asociaty
+[PAGE FAULT] Memoria Llena. Es necesario asignar bloque para página 3.
+[Sustitución RAM] LFU Hay más de 1 bloque con igual uso, aplicando FIFO, se va bloque 2
+[SWAP OUT] La página virtual 5 del programa 3
+[SWAP IN] La página virtual 3 del programa 1
+[Sustitución TLB] LRU, se va la entrada 0
+
+   Memoria Física    
+
+Marco 0 - Página virtual 0 - Programa 1 - LRU: 10 - LFU: 3 - FIFO: 1
+Marco 1 - Página virtual 1 - Programa 3 - LRU: 8 - LFU: 4 - FIFO: 2
+Marco 2 - Página virtual 3 - Programa 1 - LRU: 17 - LFU: 1 - FIFO: 9
+Marco 3 - Página virtual 4 - Programa 3 - LRU: 6 - LFU: 1 - FIFO: 4
+Marco 4 - Página virtual 1 - Programa 1 - LRU: 11 - LFU: 2 - FIFO: 5
+Marco 5 - Página virtual 7 - Programa 1 - LRU: 15 - LFU: 2 - FIFO: 6
+Marco 6 - Página virtual 1 - Programa 2 - LRU: 14 - LFU: 2 - FIFO: 7
+Marco 7 - Página virtual 5 - Programa 1 - LRU: 16 - LFU: 1 - FIFO: 8
+
+
+  TLB   
+
+Entrada 0 - LRU: 3 - LFU: 1 - FIFO: 3 Vitual: 3 
+Entrada 1 - LRU: 2 - LFU: 1 - FIFO: 2 Vitual: 5 
+
+##################################################################
+[YIELD] Programa 1 ha ejecutado YIELD
+
+[TLB] Limpiando TLB
+------- Iniciando ejecucion del programa 2 -----------
+
+[ACCESO] Memoria virtual 01000(8) -> Página virtual 010(2) Offset 00(0)
+[TLB] No hubo HIT. Full Asociaty
+[PAGE FAULT] Memoria Llena. Es necesario asignar bloque para página 2.
+[Sustitución RAM] LFU Hay más de 1 bloque con igual uso, aplicando FIFO, se va bloque 3
+[SWAP OUT] La página virtual 4 del programa 3
+[SWAP IN] La página virtual 2 del programa 2
+
+   Memoria Física    
+
+Marco 0 - Página virtual 0 - Programa 1 - LRU: 10 - LFU: 3 - FIFO: 1
+Marco 1 - Página virtual 1 - Programa 3 - LRU: 8 - LFU: 4 - FIFO: 2
+Marco 2 - Página virtual 3 - Programa 1 - LRU: 17 - LFU: 1 - FIFO: 9
+Marco 3 - Página virtual 2 - Programa 2 - LRU: 18 - LFU: 1 - FIFO: 10
+Marco 4 - Página virtual 1 - Programa 1 - LRU: 11 - LFU: 2 - FIFO: 5
+Marco 5 - Página virtual 7 - Programa 1 - LRU: 15 - LFU: 2 - FIFO: 6
+Marco 6 - Página virtual 1 - Programa 2 - LRU: 14 - LFU: 2 - FIFO: 7
+Marco 7 - Página virtual 5 - Programa 1 - LRU: 16 - LFU: 1 - FIFO: 8
+
+
+  TLB   
+
+Entrada 0 - LRU: 1 - LFU: 1 - FIFO: 1 Vitual: 2 
+Entrada 1 - LRU: 0 - LFU: 0 - FIFO: 0 Vitual: -1 
+
+##################################################################
+
+[ACCESO] Memoria virtual 00101(5) -> Página virtual 001(1) Offset 01(1)
+[TLB] No hubo HIT. Full Asociaty
+[ACCESO] Página virtual 1 accediendo al bloque 6
+[TLB] Se ha llenado la TLB
+
+   Memoria Física    
+
+Marco 0 - Página virtual 0 - Programa 1 - LRU: 10 - LFU: 3 - FIFO: 1
+Marco 1 - Página virtual 1 - Programa 3 - LRU: 8 - LFU: 4 - FIFO: 2
+Marco 2 - Página virtual 3 - Programa 1 - LRU: 17 - LFU: 1 - FIFO: 9
+Marco 3 - Página virtual 2 - Programa 2 - LRU: 18 - LFU: 1 - FIFO: 10
+Marco 4 - Página virtual 1 - Programa 1 - LRU: 11 - LFU: 2 - FIFO: 5
+Marco 5 - Página virtual 7 - Programa 1 - LRU: 15 - LFU: 2 - FIFO: 6
+Marco 6 - Página virtual 1 - Programa 2 - LRU: 19 - LFU: 3 - FIFO: 7
+Marco 7 - Página virtual 5 - Programa 1 - LRU: 16 - LFU: 1 - FIFO: 8
+
+
+  TLB   
+
+Entrada 0 - LRU: 1 - LFU: 1 - FIFO: 1 Vitual: 2 
+Entrada 1 - LRU: 2 - LFU: 1 - FIFO: 2 Vitual: 1 
+
+##################################################################
+
+[ACCESO] Memoria virtual 00100(4) -> Página virtual 001(1) Offset 00(0)
+[TLB] Hubo HIT. Full Asociaty. Accediendo a la entrada 1
+[ACCESO] Página virtual 1 accediendo al bloque 6
+
+   Memoria Física    
+
+Marco 0 - Página virtual 0 - Programa 1 - LRU: 10 - LFU: 3 - FIFO: 1
+Marco 1 - Página virtual 1 - Programa 3 - LRU: 8 - LFU: 4 - FIFO: 2
+Marco 2 - Página virtual 3 - Programa 1 - LRU: 17 - LFU: 1 - FIFO: 9
+Marco 3 - Página virtual 2 - Programa 2 - LRU: 18 - LFU: 1 - FIFO: 10
+Marco 4 - Página virtual 1 - Programa 1 - LRU: 11 - LFU: 2 - FIFO: 5
+Marco 5 - Página virtual 7 - Programa 1 - LRU: 15 - LFU: 2 - FIFO: 6
+Marco 6 - Página virtual 1 - Programa 2 - LRU: 20 - LFU: 4 - FIFO: 7
+Marco 7 - Página virtual 5 - Programa 1 - LRU: 16 - LFU: 1 - FIFO: 8
+
+
+  TLB   
+
+Entrada 0 - LRU: 1 - LFU: 1 - FIFO: 1 Vitual: 2 
+Entrada 1 - LRU: 3 - LFU: 2 - FIFO: 2 Vitual: 1 
+
+##################################################################
+
+[ACCESO] Memoria virtual 00101(5) -> Página virtual 001(1) Offset 01(1)
+[TLB] Hubo HIT. Full Asociaty. Accediendo a la entrada 1
+[ACCESO] Página virtual 1 accediendo al bloque 6
+
+   Memoria Física    
+
+Marco 0 - Página virtual 0 - Programa 1 - LRU: 10 - LFU: 3 - FIFO: 1
+Marco 1 - Página virtual 1 - Programa 3 - LRU: 8 - LFU: 4 - FIFO: 2
+Marco 2 - Página virtual 3 - Programa 1 - LRU: 17 - LFU: 1 - FIFO: 9
+Marco 3 - Página virtual 2 - Programa 2 - LRU: 18 - LFU: 1 - FIFO: 10
+Marco 4 - Página virtual 1 - Programa 1 - LRU: 11 - LFU: 2 - FIFO: 5
+Marco 5 - Página virtual 7 - Programa 1 - LRU: 15 - LFU: 2 - FIFO: 6
+Marco 6 - Página virtual 1 - Programa 2 - LRU: 21 - LFU: 5 - FIFO: 7
+Marco 7 - Página virtual 5 - Programa 1 - LRU: 16 - LFU: 1 - FIFO: 8
+
+
+  TLB   
+
+Entrada 0 - LRU: 1 - LFU: 1 - FIFO: 1 Vitual: 2 
+Entrada 1 - LRU: 4 - LFU: 3 - FIFO: 2 Vitual: 1 
+
+##################################################################
+[YIELD] Programa 2 ha ejecutado YIELD
+
+[TLB] Limpiando TLB
+------- Iniciando ejecucion del programa 1 -----------
+
+[ACCESO] Memoria virtual 01001(9) -> Página virtual 010(2) Offset 01(1)
+[TLB] No hubo HIT. Full Asociaty
+[PAGE FAULT] Memoria Llena. Es necesario asignar bloque para página 2.
+[Sustitución RAM] LFU Hay más de 1 bloque con igual uso, aplicando FIFO, se va bloque 7
+[SWAP OUT] La página virtual 5 del programa 1
+[SWAP IN] La página virtual 2 del programa 1
+
+   Memoria Física    
+
+Marco 0 - Página virtual 0 - Programa 1 - LRU: 10 - LFU: 3 - FIFO: 1
+Marco 1 - Página virtual 1 - Programa 3 - LRU: 8 - LFU: 4 - FIFO: 2
+Marco 2 - Página virtual 3 - Programa 1 - LRU: 17 - LFU: 1 - FIFO: 9
+Marco 3 - Página virtual 2 - Programa 2 - LRU: 18 - LFU: 1 - FIFO: 10
+Marco 4 - Página virtual 1 - Programa 1 - LRU: 11 - LFU: 2 - FIFO: 5
+Marco 5 - Página virtual 7 - Programa 1 - LRU: 15 - LFU: 2 - FIFO: 6
+Marco 6 - Página virtual 1 - Programa 2 - LRU: 21 - LFU: 5 - FIFO: 7
+Marco 7 - Página virtual 2 - Programa 1 - LRU: 22 - LFU: 1 - FIFO: 11
+
+
+  TLB   
+
+Entrada 0 - LRU: 1 - LFU: 1 - FIFO: 1 Vitual: 2 
+Entrada 1 - LRU: 0 - LFU: 0 - FIFO: 0 Vitual: -1 
+
+##################################################################
+
+[ACCESO] Memoria virtual 01111(15) -> Página virtual 011(3) Offset 11(3)
+[TLB] No hubo HIT. Full Asociaty
+[ACCESO] Página virtual 3 accediendo al bloque 2
+[TLB] Se ha llenado la TLB
+
+   Memoria Física    
+
+Marco 0 - Página virtual 0 - Programa 1 - LRU: 10 - LFU: 3 - FIFO: 1
+Marco 1 - Página virtual 1 - Programa 3 - LRU: 8 - LFU: 4 - FIFO: 2
+Marco 2 - Página virtual 3 - Programa 1 - LRU: 23 - LFU: 2 - FIFO: 9
+Marco 3 - Página virtual 2 - Programa 2 - LRU: 18 - LFU: 1 - FIFO: 10
+Marco 4 - Página virtual 1 - Programa 1 - LRU: 11 - LFU: 2 - FIFO: 5
+Marco 5 - Página virtual 7 - Programa 1 - LRU: 15 - LFU: 2 - FIFO: 6
+Marco 6 - Página virtual 1 - Programa 2 - LRU: 21 - LFU: 5 - FIFO: 7
+Marco 7 - Página virtual 2 - Programa 1 - LRU: 22 - LFU: 1 - FIFO: 11
+
+
+  TLB   
+
+Entrada 0 - LRU: 1 - LFU: 1 - FIFO: 1 Vitual: 2 
+Entrada 1 - LRU: 2 - LFU: 1 - FIFO: 2 Vitual: 3 
+
+##################################################################
+------- Finalizando ejecucion del programa 1 -----------
+[TLB] Limpiando TLB
+------- Iniciando ejecucion del programa 2 -----------
+
+[ACCESO] Memoria virtual 00101(5) -> Página virtual 001(1) Offset 01(1)
+[TLB] No hubo HIT. Full Asociaty
+[ACCESO] Página virtual 1 accediendo al bloque 6
+
+   Memoria Física    
+
+Marco 0 - Página virtual 0 - Programa 1 - LRU: 10 - LFU: 3 - FIFO: 1
+Marco 1 - Página virtual 1 - Programa 3 - LRU: 8 - LFU: 4 - FIFO: 2
+Marco 2 - Página virtual 3 - Programa 1 - LRU: 23 - LFU: 2 - FIFO: 9
+Marco 3 - Página virtual 2 - Programa 2 - LRU: 18 - LFU: 1 - FIFO: 10
+Marco 4 - Página virtual 1 - Programa 1 - LRU: 11 - LFU: 2 - FIFO: 5
+Marco 5 - Página virtual 7 - Programa 1 - LRU: 15 - LFU: 2 - FIFO: 6
+Marco 6 - Página virtual 1 - Programa 2 - LRU: 24 - LFU: 6 - FIFO: 7
+Marco 7 - Página virtual 2 - Programa 1 - LRU: 22 - LFU: 1 - FIFO: 11
+
+
+  TLB   
+
+Entrada 0 - LRU: 1 - LFU: 1 - FIFO: 1 Vitual: 1 
+Entrada 1 - LRU: 0 - LFU: 0 - FIFO: 0 Vitual: -1 
+
+##################################################################
+------- Finalizando ejecucion del programa 2 -----------
