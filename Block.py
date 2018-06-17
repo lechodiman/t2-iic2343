@@ -24,6 +24,7 @@ class Block:
         # Update counters
         self.insertion_time = iteration
         self.last_used_time = iteration
+        self.times_used += 1
 
     def remove_page(self):
         self.page_inside = None

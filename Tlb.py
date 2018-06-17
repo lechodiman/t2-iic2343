@@ -62,12 +62,15 @@ class Tlb:
         for b in self.blocks:
             b.remove_page()
 
-    def add_page(self, page, bin_address, iteration):
+    def add_page(self, page, page_digits, iteration):
         ''' Adds page to a block according to corr and subs'''
 
         if self.corr == "DM":
             # Get block number, add to specific block
-            block_number = int(bin_address[:self.num_of_bits_block])
+
+            # block_number = int(page_digits[:self.num_of_bits_block])
+            block_number = int(page_digits[::-1][:self.num_of_bits_block][::-1], 2)
+            print("block_number", block_number)
             block = self.blocks[block_number]
 
             # Remove current page

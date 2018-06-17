@@ -154,7 +154,8 @@ class CPU:
                     # If it not found, go to table of pages and add to TLB
                     page = self.table_of_pages.get_page(page_number, self.current_program_index)
 
-                    self.tlb.add_page(page, bin_addr, self.iteration)
+                    # self.tlb.add_page(page, bin_address, self.iteration)
+                    self.tlb.add_page(page, page_digits, self.iteration)
 
                 # Check if it has a marco in RAM
                 if not page.has_marco:
