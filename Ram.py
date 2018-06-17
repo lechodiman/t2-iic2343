@@ -36,7 +36,7 @@ class Ram:
         return False
 
     def __repr__(self):
-        msg = "\n\t Memoria Fisica\n\n"
+        msg = "\n\t Memoria Fisica, substitution: {}\n\n".format(self.subtitution)
         for m in self.marcos:
             msg += "Marco {} ".format(m.num_block)
             msg += "- Pagina virtual {}".format(repr(m.page_inside))
@@ -54,22 +54,25 @@ class Ram:
             self.marcos.append(m)
 
     def add_page(self, page, iteration, disk):
-        # Look for available marco
+        # Look for available marco (the first one)
         available_marco = None
         for m in self.marcos:
             if m.is_empty:
                 available_marco = m
+                break
 
-        print("Asociando pagina {} a marco {}".format(page, available_marco.num_block))
+        if available_marco:
+            print("[RAM] Asociando pagina {} a marco {}".format(page, available_marco.num_block))
+            available_marco.assign_page(page, iteration)
 
         # If there is no av marco, backup one
-        if not available_marco:
+        else:
             print("""[PAGE FAULT] Memoria llena.
                 Es necesario asignar marco para pagina {}""".format(page))
             marco_to_backup = self.get_marco_to_backup()
             print("[Sustitucion RAM] {}, se va el marco {}".format(self.subtitution, marco_to_backup.num_block))
 
-            # Move marco to disk
+            # Move marco to disk (this updates on_disk attr)
             disk.receive_marco(marco_to_backup)
 
             # Update swap out
@@ -79,15 +82,16 @@ class Ram:
             print("[SWAP IN] ?? La pagina: ".format(page))
 
             # Create new marco with same number
-            marco_numer = marco_to_backup.num_block
-            new_marco = Marco(marco_numer)
+            marco_number = marco_to_backup.num_block
+            new_marco = Marco(marco_number)
 
             # Replace in self.marcos
             for index, m in enumerate(self.marcos):
-                if m.num.block == marco_numer:
+                if m.num_block == marco_number:
                     self.marcos[index] = new_marco
+                    # break ?
 
-            # Assign page (this updates on_disk attr)
+            # Assign page
             new_marco.assign_page(page, iteration)
 
     def get_marco_to_backup(self):
@@ -146,7 +150,7 @@ class Ram:
 
     def update_counters(self, page, iteration):
         for m in self.marcos:
-            if m.page_inside == page:
+            if m.page_inside and m.page_inside == page:
                 m.last_used_time = iteration
                 m.times_used += 1
 

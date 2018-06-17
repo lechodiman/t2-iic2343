@@ -167,13 +167,13 @@ class CPU:
                     self.ram.add_page(page, self.iteration, self.disk)
                 else:
                     # If it has marco it can be on disk or ram
-                    if page.on_disk:
+                    if page.marco_on_disk:
                         print("[PAGE FAULT] La pagina se encuentra en un marco del disco")
                         # Page fault
                         self.table_of_pages.update_page_faults(self.current_program_index)
 
                         # Bring back page to ram, and backup one marco to disk
-                        self.ram.swap_in_out(page, self.disk, self.iteration)
+                        self.ram.swap_in_out(page, self.disk)
 
                         # It counts as a use for page that came back (LFU, LRU)
                         self.ram.update_counters(page, self.iteration)

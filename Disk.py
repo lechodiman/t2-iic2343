@@ -18,7 +18,7 @@ class Disk:
 
     def receive_marco(self, marco):
         marco.on_disk = True
-        marco.page_inside.on_disk = True
+        marco.page_inside.marco_on_disk = True
 
         self.backed_up_marcos.append(marco)
 
@@ -30,7 +30,7 @@ class Disk:
 
                 # Update on disk attr
                 m.on_disk = False
-                m.page_inside.on_disk = False
+                m.page_inside.marco_on_disk = False
 
                 # Return it
                 return m

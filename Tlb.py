@@ -22,7 +22,7 @@ class Tlb:
         return int(log(self.num_line, 2))
 
     def __repr__(self):
-        msg = "\n\t TLB\n\n"
+        msg = "\n\t TLB subs: {}, corr: {}\n\n".format(self.subs, self.corr)
 
         for b in self.blocks:
             msg += "Entrada(Block) {} ".format(b.num_block)
@@ -54,7 +54,7 @@ class Tlb:
 
                 return page
 
-        print("[TLB NO hubo HIT]. Subs: {}, Corr: {}".format(self.subs, self.corr))
+        print("[TLB NO hubo HIT] get_page de TLB returns None")
         return None
 
     def clear(self):
@@ -67,7 +67,7 @@ class Tlb:
 
         if self.corr == "DM":
             # Get block number, add to specific block
-            block_number = bin_address[:self.num_of_bits_block]
+            block_number = int(bin_address[:self.num_of_bits_block])
             block = self.blocks[block_number]
 
             # Remove current page
@@ -76,7 +76,7 @@ class Tlb:
             # Assign new page
             block.assign_page(page, iteration)
 
-            print("""[Sustitucion TLB] DM Se vacio el bloque""".format(block.num_block))
+            print("""[Sustitucion TLB] DM Se vacio el bloque: {}""".format(block.num_block))
 
         elif self.corr == "FA":
             # Look for an available block
