@@ -21,6 +21,12 @@ class Tlb:
     def num_of_bits_block(self):
         return int(log(self.num_line, 2))
 
+    @property
+    def is_empty(self):
+        bool_set = {b.is_empty for b in self.blocks}
+
+        return len(bool_set) == 1 and bool_set == {True}
+
     def __repr__(self):
         msg = "\n\t TLB subs: {}, corr: {}\n\n".format(self.subs, self.corr)
 
@@ -58,6 +64,11 @@ class Tlb:
         return None
 
     def clear(self):
+        if self.is_empty:
+            print("[TLB] TLB ya está vacía y necesita ser limpiada.")
+            return
+
+        # else (TLB no está vacía)
         print("[TLB] Limpiando TLB")
         for b in self.blocks:
             b.remove_page()
@@ -70,7 +81,6 @@ class Tlb:
 
             # block_number = int(page_digits[:self.num_of_bits_block])
             block_number = int(page_digits[::-1][:self.num_of_bits_block][::-1], 2)
-            print("block_number", block_number)
             block = self.blocks[block_number]
 
             # Remove current page
