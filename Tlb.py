@@ -54,7 +54,7 @@ class Tlb:
 
                 return page
 
-        print("[TLB NO hubo HIT]. {}".format(self.subs))
+        print("[TLB NO hubo HIT]. Subs: {}, Corr: {}".format(self.subs, self.corr))
         return None
 
     def clear(self):

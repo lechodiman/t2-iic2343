@@ -1,0 +1,518 @@
+******* Multiprogramación.**********
+Programas 3
+Memoria virtual de 32 bytes tiene 4 páginas
+Memoria física de 16 bytes tiene 2 páginas
+
+TLB con 2 entradas.
+
+------- Iniciando ejecucion del programa 1 -----------
+
+[ACCESO] Memoria virtual 00001(1) -> Página virtual 00(0) Offset 001(1)
+[TLB] No hubo HIT. Full Asociaty
+[Página SIN ASOCIAR] Memoria sin llenar. Asociando página 0 a bloque 0
+
+   Memoria Física    
+
+Marco 0 - Página virtual 0 - Programa 1 - LRU: 1 - LFU: 1 - FIFO: 1
+Marco 1 - Página virtual None - Programa None - LRU: 0 - LFU: 0 - FIFO: 0
+
+
+  TLB   
+
+Entrada 0 - LRU: 1 - LFU: 1 - FIFO: 1 Vitual: 0 
+Entrada 1 - LRU: 0 - LFU: 0 - FIFO: 0 Vitual: -1 
+
+##################################################################
+
+[ACCESO] Memoria virtual 00010(2) -> Página virtual 00(0) Offset 010(2)
+[TLB] Hubo HIT. Full Asociaty. Accediendo a la entrada 0
+[ACCESO] Página virtual 0 accediendo al bloque 0
+
+   Memoria Física    
+
+Marco 0 - Página virtual 0 - Programa 1 - LRU: 2 - LFU: 2 - FIFO: 1
+Marco 1 - Página virtual None - Programa None - LRU: 0 - LFU: 0 - FIFO: 0
+
+
+  TLB   
+
+Entrada 0 - LRU: 2 - LFU: 2 - FIFO: 1 Vitual: 0 
+Entrada 1 - LRU: 0 - LFU: 0 - FIFO: 0 Vitual: -1 
+
+##################################################################
+[YIELD] Programa 1 ha ejecutado YIELD
+
+[TLB] Limpiando TLB
+------- Iniciando ejecucion del programa 2 -----------
+[YIELD] Programa 2 ha ejecutado YIELD
+
+[TLB] Limpiando TLB
+------- Iniciando ejecucion del programa 3 -----------
+
+[ACCESO] Memoria virtual 00100(4) -> Página virtual 00(0) Offset 100(4)
+[TLB] No hubo HIT. Full Asociaty
+[Página SIN ASOCIAR] Memoria sin llenar. Asociando página 0 a bloque 1
+[MEMORIA] La memoria física se ha llenado
+
+   Memoria Física    
+
+Marco 0 - Página virtual 0 - Programa 1 - LRU: 2 - LFU: 2 - FIFO: 1
+Marco 1 - Página virtual 0 - Programa 3 - LRU: 3 - LFU: 1 - FIFO: 2
+
+
+  TLB   
+
+Entrada 0 - LRU: 1 - LFU: 1 - FIFO: 1 Vitual: 0 
+Entrada 1 - LRU: 0 - LFU: 0 - FIFO: 0 Vitual: -1 
+
+##################################################################
+
+[ACCESO] Memoria virtual 00101(5) -> Página virtual 00(0) Offset 101(5)
+[TLB] Hubo HIT. Full Asociaty. Accediendo a la entrada 0
+[ACCESO] Página virtual 0 accediendo al bloque 1
+
+   Memoria Física    
+
+Marco 0 - Página virtual 0 - Programa 1 - LRU: 2 - LFU: 2 - FIFO: 1
+Marco 1 - Página virtual 0 - Programa 3 - LRU: 4 - LFU: 2 - FIFO: 2
+
+
+  TLB   
+
+Entrada 0 - LRU: 2 - LFU: 2 - FIFO: 1 Vitual: 0 
+Entrada 1 - LRU: 0 - LFU: 0 - FIFO: 0 Vitual: -1 
+
+##################################################################
+
+[ACCESO] Memoria virtual 10111(23) -> Página virtual 10(2) Offset 111(7)
+[TLB] No hubo HIT. Full Asociaty
+[PAGE FAULT] Memoria Llena. Es necesario asignar bloque para página 2.
+[Sustitución RAM] FIFO, se va bloque 0
+[SWAP OUT] La página virtual 0 del programa 1
+[SWAP IN] La página virtual 2 del programa 3
+[TLB] Se ha llenado la TLB
+
+   Memoria Física    
+
+Marco 0 - Página virtual 2 - Programa 3 - LRU: 5 - LFU: 1 - FIFO: 3
+Marco 1 - Página virtual 0 - Programa 3 - LRU: 4 - LFU: 2 - FIFO: 2
+
+
+  TLB   
+
+Entrada 0 - LRU: 2 - LFU: 2 - FIFO: 1 Vitual: 0 
+Entrada 1 - LRU: 3 - LFU: 1 - FIFO: 2 Vitual: 2 
+
+##################################################################
+[YIELD] Programa 3 ha ejecutado YIELD
+
+[TLB] Limpiando TLB
+------- Iniciando ejecucion del programa 1 -----------
+
+[ACCESO] Memoria virtual 00111(7) -> Página virtual 00(0) Offset 111(7)
+[TLB] No hubo HIT. Full Asociaty
+[Sustitución RAM] FIFO, se va bloque 1
+[SWAP OUT] La página virtual 0 del programa 3
+[SWAP IN] La página virtual 0 del programa 1
+[PAGE FAULT] página 0 apunta aun bloque que está en disco. Se trae el bloque y pone en bloque 1
+
+   Memoria Física    
+
+Marco 0 - Página virtual 2 - Programa 3 - LRU: 5 - LFU: 1 - FIFO: 3
+Marco 1 - Página virtual 0 - Programa 1 - LRU: 6 - LFU: 1 - FIFO: 4
+
+
+  TLB   
+
+Entrada 0 - LRU: 1 - LFU: 1 - FIFO: 1 Vitual: 0 
+Entrada 1 - LRU: 0 - LFU: 0 - FIFO: 0 Vitual: -1 
+
+##################################################################
+
+[ACCESO] Memoria virtual 00011(3) -> Página virtual 00(0) Offset 011(3)
+[TLB] Hubo HIT. Full Asociaty. Accediendo a la entrada 0
+[ACCESO] Página virtual 0 accediendo al bloque 1
+
+   Memoria Física    
+
+Marco 0 - Página virtual 2 - Programa 3 - LRU: 5 - LFU: 1 - FIFO: 3
+Marco 1 - Página virtual 0 - Programa 1 - LRU: 7 - LFU: 2 - FIFO: 4
+
+
+  TLB   
+
+Entrada 0 - LRU: 2 - LFU: 2 - FIFO: 1 Vitual: 0 
+Entrada 1 - LRU: 0 - LFU: 0 - FIFO: 0 Vitual: -1 
+
+##################################################################
+
+[ACCESO] Memoria virtual 00101(5) -> Página virtual 00(0) Offset 101(5)
+[TLB] Hubo HIT. Full Asociaty. Accediendo a la entrada 0
+[ACCESO] Página virtual 0 accediendo al bloque 1
+
+   Memoria Física    
+
+Marco 0 - Página virtual 2 - Programa 3 - LRU: 5 - LFU: 1 - FIFO: 3
+Marco 1 - Página virtual 0 - Programa 1 - LRU: 8 - LFU: 3 - FIFO: 4
+
+
+  TLB   
+
+Entrada 0 - LRU: 3 - LFU: 3 - FIFO: 1 Vitual: 0 
+Entrada 1 - LRU: 0 - LFU: 0 - FIFO: 0 Vitual: -1 
+
+##################################################################
+
+[ACCESO] Memoria virtual 11111(31) -> Página virtual 11(3) Offset 111(7)
+[TLB] No hubo HIT. Full Asociaty
+[PAGE FAULT] Memoria Llena. Es necesario asignar bloque para página 3.
+[Sustitución RAM] FIFO, se va bloque 0
+[SWAP OUT] La página virtual 2 del programa 3
+[SWAP IN] La página virtual 3 del programa 1
+[TLB] Se ha llenado la TLB
+
+   Memoria Física    
+
+Marco 0 - Página virtual 3 - Programa 1 - LRU: 9 - LFU: 1 - FIFO: 5
+Marco 1 - Página virtual 0 - Programa 1 - LRU: 8 - LFU: 3 - FIFO: 4
+
+
+  TLB   
+
+Entrada 0 - LRU: 3 - LFU: 3 - FIFO: 1 Vitual: 0 
+Entrada 1 - LRU: 4 - LFU: 1 - FIFO: 2 Vitual: 3 
+
+##################################################################
+[YIELD] Programa 1 ha ejecutado YIELD
+
+[TLB] Limpiando TLB
+------- Iniciando ejecucion del programa 2 -----------
+
+[ACCESO] Memoria virtual 00110(6) -> Página virtual 00(0) Offset 110(6)
+[TLB] No hubo HIT. Full Asociaty
+[PAGE FAULT] Memoria Llena. Es necesario asignar bloque para página 0.
+[Sustitución RAM] FIFO, se va bloque 1
+[SWAP OUT] La página virtual 0 del programa 1
+[SWAP IN] La página virtual 0 del programa 2
+
+   Memoria Física    
+
+Marco 0 - Página virtual 3 - Programa 1 - LRU: 9 - LFU: 1 - FIFO: 5
+Marco 1 - Página virtual 0 - Programa 2 - LRU: 10 - LFU: 1 - FIFO: 6
+
+
+  TLB   
+
+Entrada 0 - LRU: 1 - LFU: 1 - FIFO: 1 Vitual: 0 
+Entrada 1 - LRU: 0 - LFU: 0 - FIFO: 0 Vitual: -1 
+
+##################################################################
+
+[ACCESO] Memoria virtual 00101(5) -> Página virtual 00(0) Offset 101(5)
+[TLB] Hubo HIT. Full Asociaty. Accediendo a la entrada 0
+[ACCESO] Página virtual 0 accediendo al bloque 1
+
+   Memoria Física    
+
+Marco 0 - Página virtual 3 - Programa 1 - LRU: 9 - LFU: 1 - FIFO: 5
+Marco 1 - Página virtual 0 - Programa 2 - LRU: 11 - LFU: 2 - FIFO: 6
+
+
+  TLB   
+
+Entrada 0 - LRU: 2 - LFU: 2 - FIFO: 1 Vitual: 0 
+Entrada 1 - LRU: 0 - LFU: 0 - FIFO: 0 Vitual: -1 
+
+##################################################################
+[YIELD] Programa 2 ha ejecutado YIELD
+
+[TLB] Limpiando TLB
+------- Iniciando ejecucion del programa 3 -----------
+
+[ACCESO] Memoria virtual 10000(16) -> Página virtual 10(2) Offset 000(0)
+[TLB] No hubo HIT. Full Asociaty
+[Sustitución RAM] FIFO, se va bloque 0
+[SWAP OUT] La página virtual 3 del programa 1
+[SWAP IN] La página virtual 2 del programa 3
+[PAGE FAULT] página 2 apunta aun bloque que está en disco. Se trae el bloque y pone en bloque 0
+
+   Memoria Física    
+
+Marco 0 - Página virtual 2 - Programa 3 - LRU: 12 - LFU: 1 - FIFO: 7
+Marco 1 - Página virtual 0 - Programa 2 - LRU: 11 - LFU: 2 - FIFO: 6
+
+
+  TLB   
+
+Entrada 0 - LRU: 1 - LFU: 1 - FIFO: 1 Vitual: 2 
+Entrada 1 - LRU: 0 - LFU: 0 - FIFO: 0 Vitual: -1 
+
+##################################################################
+
+[ACCESO] Memoria virtual 00110(6) -> Página virtual 00(0) Offset 110(6)
+[TLB] No hubo HIT. Full Asociaty
+[Sustitución RAM] FIFO, se va bloque 1
+[SWAP OUT] La página virtual 0 del programa 2
+[SWAP IN] La página virtual 0 del programa 3
+[PAGE FAULT] página 0 apunta aun bloque que está en disco. Se trae el bloque y pone en bloque 1
+[TLB] Se ha llenado la TLB
+
+   Memoria Física    
+
+Marco 0 - Página virtual 2 - Programa 3 - LRU: 12 - LFU: 1 - FIFO: 7
+Marco 1 - Página virtual 0 - Programa 3 - LRU: 13 - LFU: 1 - FIFO: 8
+
+
+  TLB   
+
+Entrada 0 - LRU: 1 - LFU: 1 - FIFO: 1 Vitual: 2 
+Entrada 1 - LRU: 2 - LFU: 1 - FIFO: 2 Vitual: 0 
+
+##################################################################
+
+[ACCESO] Memoria virtual 00111(7) -> Página virtual 00(0) Offset 111(7)
+[TLB] Hubo HIT. Full Asociaty. Accediendo a la entrada 1
+[ACCESO] Página virtual 0 accediendo al bloque 1
+
+   Memoria Física    
+
+Marco 0 - Página virtual 2 - Programa 3 - LRU: 12 - LFU: 1 - FIFO: 7
+Marco 1 - Página virtual 0 - Programa 3 - LRU: 14 - LFU: 2 - FIFO: 8
+
+
+  TLB   
+
+Entrada 0 - LRU: 1 - LFU: 1 - FIFO: 1 Vitual: 2 
+Entrada 1 - LRU: 3 - LFU: 2 - FIFO: 2 Vitual: 0 
+
+##################################################################
+------- Finalizando ejecucion del programa 3 -----------
+[TLB] Limpiando TLB
+------- Iniciando ejecucion del programa 1 -----------
+
+[ACCESO] Memoria virtual 11111(31) -> Página virtual 11(3) Offset 111(7)
+[TLB] No hubo HIT. Full Asociaty
+[Sustitución RAM] FIFO, se va bloque 0
+[SWAP OUT] La página virtual 2 del programa 3
+[SWAP IN] La página virtual 3 del programa 1
+[PAGE FAULT] página 3 apunta aun bloque que está en disco. Se trae el bloque y pone en bloque 0
+
+   Memoria Física    
+
+Marco 0 - Página virtual 3 - Programa 1 - LRU: 15 - LFU: 1 - FIFO: 9
+Marco 1 - Página virtual 0 - Programa 3 - LRU: 14 - LFU: 2 - FIFO: 8
+
+
+  TLB   
+
+Entrada 0 - LRU: 1 - LFU: 1 - FIFO: 1 Vitual: 3 
+Entrada 1 - LRU: 0 - LFU: 0 - FIFO: 0 Vitual: -1 
+
+##################################################################
+
+[ACCESO] Memoria virtual 10111(23) -> Página virtual 10(2) Offset 111(7)
+[TLB] No hubo HIT. Full Asociaty
+[PAGE FAULT] Memoria Llena. Es necesario asignar bloque para página 2.
+[Sustitución RAM] FIFO, se va bloque 1
+[SWAP OUT] La página virtual 0 del programa 3
+[SWAP IN] La página virtual 2 del programa 1
+[TLB] Se ha llenado la TLB
+
+   Memoria Física    
+
+Marco 0 - Página virtual 3 - Programa 1 - LRU: 15 - LFU: 1 - FIFO: 9
+Marco 1 - Página virtual 2 - Programa 1 - LRU: 16 - LFU: 1 - FIFO: 10
+
+
+  TLB   
+
+Entrada 0 - LRU: 1 - LFU: 1 - FIFO: 1 Vitual: 3 
+Entrada 1 - LRU: 2 - LFU: 1 - FIFO: 2 Vitual: 2 
+
+##################################################################
+
+[ACCESO] Memoria virtual 01111(15) -> Página virtual 01(1) Offset 111(7)
+[TLB] No hubo HIT. Full Asociaty
+[PAGE FAULT] Memoria Llena. Es necesario asignar bloque para página 1.
+[Sustitución RAM] FIFO, se va bloque 0
+[SWAP OUT] La página virtual 3 del programa 1
+[SWAP IN] La página virtual 1 del programa 1
+[Sustitución TLB] LFU Hay más de 1 entrada con igual uso, aplicando FIFO, se va la entrada 0
+
+   Memoria Física    
+
+Marco 0 - Página virtual 1 - Programa 1 - LRU: 17 - LFU: 1 - FIFO: 11
+Marco 1 - Página virtual 2 - Programa 1 - LRU: 16 - LFU: 1 - FIFO: 10
+
+
+  TLB   
+
+Entrada 0 - LRU: 3 - LFU: 1 - FIFO: 3 Vitual: 1 
+Entrada 1 - LRU: 2 - LFU: 1 - FIFO: 2 Vitual: 2 
+
+##################################################################
+[YIELD] Programa 1 ha ejecutado YIELD
+
+[TLB] Limpiando TLB
+------- Iniciando ejecucion del programa 2 -----------
+
+[ACCESO] Memoria virtual 01000(8) -> Página virtual 01(1) Offset 000(0)
+[TLB] No hubo HIT. Full Asociaty
+[PAGE FAULT] Memoria Llena. Es necesario asignar bloque para página 1.
+[Sustitución RAM] FIFO, se va bloque 1
+[SWAP OUT] La página virtual 2 del programa 1
+[SWAP IN] La página virtual 1 del programa 2
+
+   Memoria Física    
+
+Marco 0 - Página virtual 1 - Programa 1 - LRU: 17 - LFU: 1 - FIFO: 11
+Marco 1 - Página virtual 1 - Programa 2 - LRU: 18 - LFU: 1 - FIFO: 12
+
+
+  TLB   
+
+Entrada 0 - LRU: 1 - LFU: 1 - FIFO: 1 Vitual: 1 
+Entrada 1 - LRU: 0 - LFU: 0 - FIFO: 0 Vitual: -1 
+
+##################################################################
+
+[ACCESO] Memoria virtual 00101(5) -> Página virtual 00(0) Offset 101(5)
+[TLB] No hubo HIT. Full Asociaty
+[Sustitución RAM] FIFO, se va bloque 0
+[SWAP OUT] La página virtual 1 del programa 1
+[SWAP IN] La página virtual 0 del programa 2
+[PAGE FAULT] página 0 apunta aun bloque que está en disco. Se trae el bloque y pone en bloque 0
+[TLB] Se ha llenado la TLB
+
+   Memoria Física    
+
+Marco 0 - Página virtual 0 - Programa 2 - LRU: 19 - LFU: 1 - FIFO: 13
+Marco 1 - Página virtual 1 - Programa 2 - LRU: 18 - LFU: 1 - FIFO: 12
+
+
+  TLB   
+
+Entrada 0 - LRU: 1 - LFU: 1 - FIFO: 1 Vitual: 1 
+Entrada 1 - LRU: 2 - LFU: 1 - FIFO: 2 Vitual: 0 
+
+##################################################################
+
+[ACCESO] Memoria virtual 00100(4) -> Página virtual 00(0) Offset 100(4)
+[TLB] Hubo HIT. Full Asociaty. Accediendo a la entrada 1
+[ACCESO] Página virtual 0 accediendo al bloque 0
+
+   Memoria Física    
+
+Marco 0 - Página virtual 0 - Programa 2 - LRU: 20 - LFU: 2 - FIFO: 13
+Marco 1 - Página virtual 1 - Programa 2 - LRU: 18 - LFU: 1 - FIFO: 12
+
+
+  TLB   
+
+Entrada 0 - LRU: 1 - LFU: 1 - FIFO: 1 Vitual: 1 
+Entrada 1 - LRU: 3 - LFU: 2 - FIFO: 2 Vitual: 0 
+
+##################################################################
+
+[ACCESO] Memoria virtual 00101(5) -> Página virtual 00(0) Offset 101(5)
+[TLB] Hubo HIT. Full Asociaty. Accediendo a la entrada 1
+[ACCESO] Página virtual 0 accediendo al bloque 0
+
+   Memoria Física    
+
+Marco 0 - Página virtual 0 - Programa 2 - LRU: 21 - LFU: 3 - FIFO: 13
+Marco 1 - Página virtual 1 - Programa 2 - LRU: 18 - LFU: 1 - FIFO: 12
+
+
+  TLB   
+
+Entrada 0 - LRU: 1 - LFU: 1 - FIFO: 1 Vitual: 1 
+Entrada 1 - LRU: 4 - LFU: 3 - FIFO: 2 Vitual: 0 
+
+##################################################################
+[YIELD] Programa 2 ha ejecutado YIELD
+
+[TLB] Limpiando TLB
+------- Iniciando ejecucion del programa 1 -----------
+
+[ACCESO] Memoria virtual 01001(9) -> Página virtual 01(1) Offset 001(1)
+[TLB] No hubo HIT. Full Asociaty
+[Sustitución RAM] FIFO, se va bloque 1
+[SWAP OUT] La página virtual 1 del programa 2
+[SWAP IN] La página virtual 1 del programa 1
+[PAGE FAULT] página 1 apunta aun bloque que está en disco. Se trae el bloque y pone en bloque 1
+
+   Memoria Física    
+
+Marco 0 - Página virtual 0 - Programa 2 - LRU: 21 - LFU: 3 - FIFO: 13
+Marco 1 - Página virtual 1 - Programa 1 - LRU: 22 - LFU: 1 - FIFO: 14
+
+
+  TLB   
+
+Entrada 0 - LRU: 1 - LFU: 1 - FIFO: 1 Vitual: 1 
+Entrada 1 - LRU: 0 - LFU: 0 - FIFO: 0 Vitual: -1 
+
+##################################################################
+
+[ACCESO] Memoria virtual 01111(15) -> Página virtual 01(1) Offset 111(7)
+[TLB] Hubo HIT. Full Asociaty. Accediendo a la entrada 0
+[ACCESO] Página virtual 1 accediendo al bloque 1
+
+   Memoria Física    
+
+Marco 0 - Página virtual 0 - Programa 2 - LRU: 21 - LFU: 3 - FIFO: 13
+Marco 1 - Página virtual 1 - Programa 1 - LRU: 23 - LFU: 2 - FIFO: 14
+
+
+  TLB   
+
+Entrada 0 - LRU: 2 - LFU: 2 - FIFO: 1 Vitual: 1 
+Entrada 1 - LRU: 0 - LFU: 0 - FIFO: 0 Vitual: -1 
+
+##################################################################
+------- Finalizando ejecucion del programa 1 -----------
+[TLB] Limpiando TLB
+------- Iniciando ejecucion del programa 2 -----------
+
+[ACCESO] Memoria virtual 00101(5) -> Página virtual 00(0) Offset 101(5)
+[TLB] No hubo HIT. Full Asociaty
+[ACCESO] Página virtual 0 accediendo al bloque 0
+
+   Memoria Física    
+
+Marco 0 - Página virtual 0 - Programa 2 - LRU: 24 - LFU: 4 - FIFO: 13
+Marco 1 - Página virtual 1 - Programa 1 - LRU: 23 - LFU: 2 - FIFO: 14
+
+
+  TLB   
+
+Entrada 0 - LRU: 1 - LFU: 1 - FIFO: 1 Vitual: 0 
+Entrada 1 - LRU: 0 - LFU: 0 - FIFO: 0 Vitual: -1 
+
+##################################################################
+------- Finalizando ejecucion del programa 2 -----------
+PROGRAMA  1
+hit TLB:  4
+page fault:  7
+swap in:  7
+swap out:  6
+page valid:  4
+page disk:  3
+
+PROGRAMA  2
+hit TLB:  3
+page fault:  3
+swap in:  3
+swap out:  2
+page valid:  2
+page disk:  1
+
+PROGRAMA  3
+hit TLB:  2
+page fault:  4
+swap in:  4
+swap out:  4
+page valid:  2
+page disk:  2
+
