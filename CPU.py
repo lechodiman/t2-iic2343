@@ -181,10 +181,13 @@ class CPU:
                         # It has a marco on ram (LFU, LRU)
                         self.ram.update_counters(page, self.iteration)
 
+                print(repr(self.ram))
+                print(repr(self.tlb))
+
                 print("#" * 66)
 
-        # print("All programs finished")
-        # self.print_statistics()
+        print("All programs finished")
+        self.print_statistics()
 
     def print_statistics(self):
         for p in range(self.num_prog):
