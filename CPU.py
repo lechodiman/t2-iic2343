@@ -175,10 +175,10 @@ class CPU:
                         self.table_of_pages.update_page_faults(self.current_program_index)
 
                         # Bring back page to ram, and backup one marco to disk
-                        self.ram.swap_in_out(page, self.disk)
+                        self.ram.swap_in_out(page, self.disk, self.iteration)
 
                         # It counts as a use for page that came back (LFU, LRU)
-                        self.ram.update_counters(page, self.iteration)
+                        # self.ram.update_counters(page, self.iteration)
                     else:
                         # It has a marco on ram (LFU, LRU)
                         self.ram.update_counters(page, self.iteration)

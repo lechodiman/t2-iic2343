@@ -126,10 +126,15 @@ class Ram:
 
         return marco_to_backup
 
-    def swap_in_out(self, page, disk):
+    def swap_in_out(self, page, disk, iteration):
         marco_to_backup = self.get_marco_to_backup()
 
         marco_to_swap_in = disk.pop_marco_to_swap_in(page)
+
+        # Update counters
+        entering_page = marco_to_swap_in.page_inside
+        marco_to_swap_in.remove_page()
+        marco_to_swap_in.assign_page(entering_page, iteration)
 
         # Change number of marco to stay the same
         marco_to_swap_in.num_block = marco_to_backup.num_block
