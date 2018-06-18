@@ -80,8 +80,9 @@ class Ram:
             print("[SWAP OUT] La pagina virtual: {}".format(marco_to_backup.page_inside))
             print("[SWAP IN]  La pagina virtual: {}".format(page))
             program_out_index = marco_to_backup.page_inside.program
+            program_in_index = page.program
             self.swap_out_stats[program_out_index] += 1
-            self.swap_in_stats[program_out_index] += 1
+            self.swap_in_stats[program_in_index] += 1
 
             # Create new marco with same number
             marco_number = marco_to_backup.num_block
