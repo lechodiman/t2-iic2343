@@ -54,6 +54,9 @@ class Ram:
             self.marcos.append(m)
 
     def add_page(self, page, iteration, disk):
+        if not self.is_full:
+            self.swap_in_stats[page.program] += 1
+
         # Look for available marco (the first one)
         available_marco = None
         for m in self.marcos:
@@ -67,8 +70,8 @@ class Ram:
 
         # If there is no av marco, backup one
         else:
-            print("""[PAGE FAULT] (de nuevo ?) Memoria llena. \
-                Es necesario asignar marco para pagina {}""".format(page))
+            print("[PAGE FAULT] (de nuevo ?) Memoria llena. \
+                Es necesario asignar marco para pagina {}".format(page))
 
             marco_to_backup = self.get_marco_to_backup()
             print("[Sustitucion RAM] {}, se va el marco {}".format(self.subtitution, marco_to_backup.num_block))
@@ -76,7 +79,7 @@ class Ram:
             # Move marco to disk (this updates on_disk attr)
             disk.receive_marco(marco_to_backup)
 
-            # Update swap out
+            # Update swap out and swap in
             print("[SWAP OUT] La pagina virtual: {}".format(marco_to_backup.page_inside))
             print("[SWAP IN]  La pagina virtual: {}".format(page))
             program_out_index = marco_to_backup.page_inside.program

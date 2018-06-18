@@ -68,10 +68,10 @@ class CPU:
         self.print_components()
 
     def print_components(self):
-        print(repr(self.table_of_pages))
+        # print(repr(self.table_of_pages))
         print(repr(self.ram))
         print(repr(self.tlb))
-        print(repr(self.disk))
+        # print(repr(self.disk))
 
     def run_programs(self):
         ''' Flow control to run programs in correct order '''
@@ -185,6 +185,9 @@ class CPU:
 
                 print(repr(self.ram))
                 print(repr(self.tlb))
+                print()
+                print("self.ram.swap_out_stats, ", self.ram.swap_out_stats)
+                print("self.ram.swap_in_stats, ", self.ram.swap_in_stats)
 
                 print("#" * 66)
 
