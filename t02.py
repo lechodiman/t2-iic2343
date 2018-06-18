@@ -27,7 +27,6 @@ if __name__ == "__main__":
 
         cpu = CPU(**kwargs)
         cpu.run_programs()
-
         sys.stdout = old_stdout
         log_file.close()
 

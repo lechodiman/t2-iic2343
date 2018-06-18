@@ -67,8 +67,9 @@ class Ram:
 
         # If there is no av marco, backup one
         else:
-            print("""[PAGE FAULT] Memoria llena.
+            print("""[PAGE FAULT] (de nuevo ?) Memoria llena. \
                 Es necesario asignar marco para pagina {}""".format(page))
+
             marco_to_backup = self.get_marco_to_backup()
             print("[Sustitucion RAM] {}, se va el marco {}".format(self.subtitution, marco_to_backup.num_block))
 
@@ -76,10 +77,11 @@ class Ram:
             disk.receive_marco(marco_to_backup)
 
             # Update swap out
+            print("[SWAP OUT] La pagina virtual: {}".format(marco_to_backup.page_inside))
+            print("[SWAP IN]  La pagina virtual: {}".format(page))
             program_out_index = marco_to_backup.page_inside.program
             self.swap_out_stats[program_out_index] += 1
-            print("[SWAP OUT] La pagina virutal: ".format(marco_to_backup.page_inside))
-            print("[SWAP IN] ?? La pagina: ".format(page))
+            self.swap_in_stats[program_out_index] += 1
 
             # Create new marco with same number
             marco_number = marco_to_backup.num_block
@@ -89,7 +91,7 @@ class Ram:
             for index, m in enumerate(self.marcos):
                 if m.num_block == marco_number:
                     self.marcos[index] = new_marco
-                    # break ?
+                    break
 
             # Assign page
             new_marco.assign_page(page, iteration)
@@ -128,6 +130,9 @@ class Ram:
         marco_to_backup = self.get_marco_to_backup()
 
         marco_to_swap_in = disk.pop_marco_to_swap_in(page)
+
+        # Change number of marco to stay the same
+        marco_to_swap_in.num_block = marco_to_backup.num_block
 
         # Replace in self.marcos in same position
         for index, m in enumerate(self.marcos):

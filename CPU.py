@@ -162,6 +162,7 @@ class CPU:
                     print("[Pagina SIN ASOCIAR] Memoria full: {}".format(self.ram.is_full))
 
                     # Page fault
+                    print("[PAGE FAULT] Página no tiene marco.")
                     self.table_of_pages.update_page_faults(self.current_program_index)
 
                     # Assign a marco
