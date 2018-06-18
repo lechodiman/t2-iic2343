@@ -6,7 +6,7 @@ if __name__ == "__main__":
     DEBUG_MODE = True
 
     if DEBUG_MODE:
-        with open('./Debug/TestEvaluados/Test 1 Input.txt') as file:
+        with open('./Debug/TestEvaluados/Test 3 Input.txt') as file:
             lines = [l.strip().replace(" ", "").split("=") for l in file.readlines()]
             kwargs = {v[0]: v[1] for v in lines}
 

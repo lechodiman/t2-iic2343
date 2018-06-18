@@ -195,7 +195,6 @@ class CPU:
                 print("*****************PROGRAMA {} HA FINALIZADO!************".format(self.current_program_index))
                 self.tlb.clear()
 
-        print("All programs finished")
         self.print_statistics()
 
     def print_statistics(self):
