@@ -97,6 +97,7 @@ class Tlb:
             for b in self.blocks:
                 if b.is_empty:
                     available_block = b
+                    break
 
             # If there is no available block, replace one
             if not available_block:
