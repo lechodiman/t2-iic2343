@@ -120,13 +120,8 @@ class Ram:
             marco_to_backup = marco_min_time
 
         elif self.subtitution == "LFU":
-            # Replace with marco with least times used
-            marco_least_used = self.marcos[0]
-            for m in self.marcos:
-                if m.times_used < marco_least_used.times_used:
-                    marco_least_used = m
-
-            marco_to_backup = marco_least_used
+            # Replace with marco with least times used, if tie, then FIFO
+            marco_to_backup = sorted(self.marcos, key=lambda m:(m.times_used, m.insertion_time))[0]
 
         return marco_to_backup
 
