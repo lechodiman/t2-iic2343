@@ -120,13 +120,10 @@ class Tlb:
                     block_to_replace = block_min_time
 
                 elif self.subs == "LFU":
-                    # Replace with block with least times used
-                    block_least_used = self.blocks[0]
-                    for b in self.blocks:
-                        if b.times_used < block_least_used.times_used:
-                            block_least_used = b
 
-                    block_to_replace = block_least_used
+                    # Replace with block with least times used, if tie, then FIFO
+                    block_to_replace = sorted(self.blocks, key=lambda b:(b.times_used, b.insertion_time))[0]
+
 
                 print("""[Sustitucion TLB] {},
                  se va la entrada de bloque {}""".format(self.subs,
