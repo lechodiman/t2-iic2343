@@ -2,6 +2,7 @@ from TableOfPages import TableOfPages
 from Ram import Ram
 from Tlb import Tlb
 from Disk import Disk
+from config import DEBUG_MODE
 
 
 class CPU:
@@ -18,7 +19,8 @@ class CPU:
         self.num_prog = NUM_PROG
         self.prog = PROG
 
-        print("*" * 50 + "\n")
+        if DEBUG_MODE:
+            print("*" * 50 + "\n")
 
         # Stores index of current program running
         self.current_program_index = 0
@@ -65,8 +67,6 @@ class CPU:
         self.tlb = Tlb(self.num_line, self.subs, self.corr, self.num_prog)
         self.disk = Disk(self.num_prog)
 
-        self.print_components()
-
     def print_components(self):
         # print(repr(self.table_of_pages))
         print(repr(self.ram))
@@ -84,15 +84,17 @@ class CPU:
                 continue
 
             # If it is not finished, use it
-            print("-" * 25)
-            print("Current program {}".format(self.current_program_index))
+            if DEBUG_MODE:
+                print("-" * 25)
+                print("Current program {}".format(self.current_program_index))
 
             # Get last addres used by this program
             last_used_this_program = self.last_addr_used_register[self.current_program_index]
 
             # If program starts with yield, save info and go to next program
             if last_used_this_program == 0 and self.current_program_list[last_used_this_program] == -1:
-                print("[YIELD] Programa {} ha ejecutado YIELD".format(self.current_program_index))
+                if DEBUG_MODE:
+                    print("[YIELD] Programa {} ha ejecutado YIELD".format(self.current_program_index))
                 self.tlb.clear()
 
                 # Save last addres used in this program and add one so it does not resumes from
@@ -115,17 +117,20 @@ class CPU:
                 if j < last_used_this_program:
                     continue
 
-                print()
-                print("Iteration: {}".format(self.iteration))
-                print("Addr: {}, program: {}".format(addr, self.current_program_index))
-                print()
+                if DEBUG_MODE:
+                    print()
+                    print("Iteration: {}".format(self.iteration))
+                    print("Addr: {}, program: {}".format(addr, self.current_program_index))
+                    print()
 
                 # Save last addres used in this program
                 self.last_addr_used_register[self.current_program_index] = j
 
                 # If addr is a yield, clean TLB and go to next program
                 if addr < 0:
-                    print("[YIELD] Programa {} ha ejecutado YIELD".format(self.current_program_index))
+                    if DEBUG_MODE:
+                        print("[YIELD] Programa {} ha ejecutado YIELD".format(self.current_program_index))
+
                     self.tlb.clear()
 
                     # Go to next program
@@ -144,8 +149,9 @@ class CPU:
                 offset_digits = bin_addr[bits_to_check:]
                 page_number = self.table_of_pages.to_decimal(page_digits)
                 offset_number = self.table_of_pages.to_decimal(offset_digits)
-                print("[ACCESO] Memoria virtual {}({}) -> Pagina virtual {}({}) Offset {}({})".format(
-                    bin_addr, addr, page_digits, page_number, offset_digits, offset_number))
+                if DEBUG_MODE:
+                    print("[ACCESO] Memoria virtual {}({}) -> Pagina virtual {}({}) Offset {}({})".format(
+                        bin_addr, addr, page_digits, page_number, offset_digits, offset_number))
 
                 # Check page in TLB, if it finds the page updates hit count and returns it
                 page = self.tlb.get_page(page_number, self.current_program_index, self.iteration)
@@ -159,10 +165,11 @@ class CPU:
 
                 # Check if it has a marco in RAM
                 if not page.has_marco:
-                    print("[Pagina SIN ASOCIAR] Memoria full: {}".format(self.ram.is_full))
+                    if DEBUG_MODE:
+                        print("[Pagina SIN ASOCIAR] Memoria full: {}".format(self.ram.is_full))
+                        # Page fault
+                        print("[PAGE FAULT] Página no tiene marco.")
 
-                    # Page fault
-                    print("[PAGE FAULT] Página no tiene marco.")
                     self.table_of_pages.update_page_faults(self.current_program_index)
 
                     # Assign a marco
@@ -170,7 +177,9 @@ class CPU:
                 else:
                     # If it has marco it can be on disk or ram
                     if page.marco_on_disk:
-                        print("[PAGE FAULT] La pagina se encuentra en un marco del disco")
+                        if DEBUG_MODE:
+                            print("[PAGE FAULT] La pagina se encuentra en un marco del disco")
+
                         # Page fault
                         self.table_of_pages.update_page_faults(self.current_program_index)
 
@@ -183,23 +192,24 @@ class CPU:
                         # It has a marco on ram (LFU, LRU)
                         self.ram.update_counters(page, self.iteration)
 
-                print(repr(self.ram))
-                print(repr(self.tlb))
-                print()
-                print("self.ram.swap_out_stats, ", self.ram.swap_out_stats)
-                print("self.ram.swap_in_stats, ", self.ram.swap_in_stats)
-
-                print("#" * 66)
+                if DEBUG_MODE:
+                    print(repr(self.ram))
+                    print(repr(self.tlb))
+                    print()
+                    print("self.ram.swap_out_stats, ", self.ram.swap_out_stats)
+                    print("self.ram.swap_in_stats, ", self.ram.swap_in_stats)
+                    print("#" * 66)
 
             if self.current_program_is_finished:
-                print("*****************PROGRAMA {} HA FINALIZADO!************".format(self.current_program_index))
+                if DEBUG_MODE:
+                    print("*****************PROGRAMA {} HA FINALIZADO!************".format(self.current_program_index))
                 self.tlb.clear()
 
         self.print_statistics()
 
     def print_statistics(self):
         for p in range(self.num_prog):
-            print("PROGRAMA  {}".format(p))
+            print("PROGRAMA  {}".format(p + 1))
             # Hit TLB
             hit_tlb = self.tlb.hit_stats[p]
             page_fault = self.table_of_pages.page_fault_stats[p]

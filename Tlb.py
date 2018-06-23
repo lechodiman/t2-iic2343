@@ -1,5 +1,6 @@
 from Block import Block
 from math import log
+from config import DEBUG_MODE
 
 
 class Tlb:
@@ -51,7 +52,8 @@ class Tlb:
         for b in self.blocks:
             page = b.get_page()
             if page and page.number == page_number and page.program == program:
-                print("[TLB] Hubo HIT. {}".format(self.subs))
+                if DEBUG_MODE:
+                    print("[TLB] Hubo HIT. {}".format(self.subs))
                 self.hit_stats[program] += 1
 
                 # Update counters of block
@@ -60,16 +62,19 @@ class Tlb:
 
                 return page
 
-        print("[TLB NO hubo HIT] get_page de TLB returns None")
+        if DEBUG_MODE:
+            print("[TLB NO hubo HIT] get_page de TLB returns None")
         return None
 
     def clear(self):
         if self.is_empty:
-            print("[TLB] TLB ya está vacía y necesita ser limpiada.")
+            if DEBUG_MODE:
+                print("[TLB] TLB ya está vacía y necesita ser limpiada.")
             return
 
         # else (TLB no está vacía)
-        print("[TLB] Limpiando TLB")
+        if DEBUG_MODE:
+            print("[TLB] Limpiando TLB")
         for b in self.blocks:
             b.remove_page()
 
@@ -89,7 +94,8 @@ class Tlb:
             # Assign new page
             block.assign_page(page, iteration)
 
-            print("""[Sustitucion TLB] DM Se vacio el bloque: {}""".format(block.num_block))
+            if DEBUG_MODE:
+                print("""[Sustitucion TLB] DM Se vacio el bloque: {}""".format(block.num_block))
 
         elif self.corr == "FA":
             # Look for an available block
@@ -122,12 +128,12 @@ class Tlb:
                 elif self.subs == "LFU":
 
                     # Replace with block with least times used, if tie, then FIFO
-                    block_to_replace = sorted(self.blocks, key=lambda b:(b.times_used, b.insertion_time))[0]
+                    block_to_replace = sorted(self.blocks, key=lambda b: (b.times_used, b.insertion_time))[0]
 
-
-                print("""[Sustitucion TLB] {},
-                 se va la entrada de bloque {}""".format(self.subs,
-                                                         block_to_replace.num_block))
+                if DEBUG_MODE:
+                    print("""[Sustitucion TLB] {},
+                     se va la entrada de bloque {}""".format(self.subs,
+                                                             block_to_replace.num_block))
 
                 # Remove current page
                 block_to_replace.remove_page()

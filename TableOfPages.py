@@ -1,5 +1,6 @@
 from Page import Page
 from math import log
+from config import DEBUG_MODE
 
 
 class TableOfPages:
@@ -14,7 +15,8 @@ class TableOfPages:
 
         self.init_tables()
 
-        print("Memoria virtual de {} bytes tiene {} pages".format(self.mem_vir_size, self.num_of_pages))
+        if DEBUG_MODE:
+            print("Memoria virtual de {} bytes tiene {} pages".format(self.mem_vir_size, self.num_of_pages))
 
     def __repr__(self):
         msg = "\n\t Table Of Pages\n\n"
